@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nishioka Yakisoba - Cristalina, GO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Outfit', 'sans-serif'], serif: ['Noto Serif JP', 'serif'] },
+                    colors: { 
+                        nishi: { red: '#B91C1C', black: '#111827', gold: '#FBBF24', bg: '#FDFBF7' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #FDFBF7; color: #111827; scroll-behavior: smooth; }
+        .hero-pattern {
+            background-color: #111827;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='#b91c1c' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full bg-nishi-bg/95 backdrop-blur-md z-50 border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-nishi-red rounded-full flex items-center justify-center">
+                    <div class="w-3 h-3 bg-white rounded-full"></div>
+                </div>
+                <span class="font-serif font-black tracking-widest uppercase text-xl">Nishioka</span>
+            </div>
+            <div class="hidden md:flex gap-8 font-semibold text-sm tracking-widest uppercase text-gray-600">
+                <a href="#historia" class="hover:text-nishi-red transition-colors">História</a>
+                <a href="#cardapio" class="hover:text-nishi-red transition-colors">Cardápio</a>
+                <a href="#contato" class="hover:text-nishi-red transition-colors">Contato</a>
+            </div>
+            <a href="#cardapio" class="bg-nishi-black text-white px-4 md:px-5 py-2 rounded-sm font-bold text-xs md:text-sm uppercase tracking-wider hover:bg-nishi-red transition-colors">
+                Fazer Pedido
+            </a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="relative pt-32 pb-20 px-6 hero-pattern min-h-[90vh] flex items-center overflow-hidden">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center w-full">
+            
+            <div class="text-white z-10">
+                <div class="inline-block px-3 py-1 bg-nishi-red/20 border border-nishi-red text-nishi-red font-bold tracking-widest uppercase text-xs mb-6 rounded-sm">
+                    Cristalina, GO
+                </div>
+                <h1 class="text-5xl md:text-7xl font-serif font-black leading-tight mb-6">
+                    O Sabor da<br>
+                    <span class="text-nishi-gold">Paciência.</span>
+                </h1>
+                <p class="text-gray-300 text-lg md:text-xl font-light mb-8 max-w-md leading-relaxed">
+                    Macarrão artesanal importado do Japão. Um caldo que leva horas a apurar. A verdadeira essência da comida de rua nipónica, servida na sua mesa.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#cardapio" class="bg-nishi-red text-white px-8 py-4 font-bold uppercase tracking-wider rounded-sm hover:bg-red-800 transition-colors w-full md:w-auto text-center">Ver Cardápio</a>
+                </div>
+            </div>
+
+            <div class="relative z-10 flex justify-center md:justify-end mt-10 md:mt-0">
+                <!-- Imagem Ghibli (Google Drive) -->
+                <div class="relative">
+                    <div class="absolute inset-0 bg-nishi-gold transform translate-x-3 translate-y-3 md:translate-x-4 md:translate-y-4 rounded-sm"></div>
+                    <img src="https://lh3.googleusercontent.com/d/1s-IiGw89huM2DfZeNQ1K4iTItqrjYM7W" alt="Yakisoba Ghibli" class="relative z-10 w-full max-w-[300px] md:max-w-md h-auto object-cover rounded-sm border-4 border-nishi-black shadow-2xl" onerror="this.src='https://placehold.co/600x400/111827/B91C1C?text=Nishioka+Yakisoba'">
+                    
+                    <!-- Selo flutuante -->
+                    <div class="absolute -bottom-4 -left-4 md:-bottom-6 md:-left-6 bg-white p-3 md:p-4 rounded-full border-2 border-nishi-black shadow-lg z-20 flex items-center justify-center w-24 h-24 md:w-28 md:h-28 text-center transform -rotate-12">
+                        <span class="font-serif font-black text-nishi-red text-[10px] md:text-sm uppercase leading-tight">Massa<br>Importada<br>🇯🇵</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Palavra Nishioka em japonês gigante no fundo -->
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-5 pointer-events-none text-[40vw] md:text-[25vw] font-serif font-black text-white select-none whitespace-nowrap">
+                西岡
+            </div>
+        </div>
+    </section>
+
+    <!-- HISTÓRIA & MISSÃO -->
+    <section id="historia" class="py-20 md:py-24 px-6 bg-white relative overflow-hidden">
+        <div class="absolute top-0 right-10 text-[8rem] md:text-[10rem] font-serif text-gray-50 opacity-50 select-none hidden md:block">文化</div>
+        
+        <div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-12 items-center">
+            
+            <div class="md:col-span-4 flex justify-center relative order-2 md:order-1 mt-8 md:mt-0">
+                <svg width="200" height="200" md:width="250" md:height="250" viewBox="0 0 100 100" class="drop-shadow-xl relative z-10">
+                    <circle cx="50" cy="50" r="46" fill="#B91C1C" />
+                    <line x1="75" y1="15" x2="35" y2="55" stroke="#FBBF24" stroke-width="3" stroke-linecap="round"/>
+                    <line x1="85" y1="25" x2="45" y2="65" stroke="#FBBF24" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M40 55 Q 45 40 55 50 T 70 45" fill="none" stroke="#FDFBF7" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M35 60 Q 50 45 60 60 T 75 55" fill="none" stroke="#FDFBF7" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M30 65 Q 45 50 55 65 T 70 60" fill="none" stroke="#FDFBF7" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M20 60 C 20 85, 80 85, 80 60 Z" fill="#111827" />
+                    <path d="M20 60 Q 50 65 80 60" fill="none" stroke="#FBBF24" stroke-width="2" />
+                </svg>
+            </div>
+
+            <div class="md:col-span-8 order-1 md:order-2">
+                <h2 class="text-nishi-red font-bold tracking-[0.3em] uppercase text-sm mb-2">A Família Nishioka</h2>
+                <h3 class="text-3xl md:text-5xl font-serif font-black text-nishi-black mb-8 leading-tight">O compromisso com o tempo e o ingrediente.</h3>
+                
+                <div class="space-y-6 text-gray-600 leading-relaxed text-base md:text-lg font-light">
+                    <p>
+                        O sobrenome <strong class="text-nishi-black font-bold">Nishioka (西岡)</strong> significa "Colina do Oeste". Do oriente para o coração do cerrado goiano, a Chef Aska trouxe uma filosofia inegociável: <em>o umami perfeito não aceita atalhos.</em>
+                    </p>
+                    <p>
+                        Viajamos quilómetros para selecionar os vegetais mais frescos e importamos diretamente a massa japonesa autêntica. Enquanto o mercado ferve molhos prontos em minutos, o nosso caldo base exige <strong class="text-nishi-red font-bold">horas de fogo lento</strong>. Extraímos cada nota de sabor de frangos selecionados até atingir um caldo denso e rico em colágeno.
+                    </p>
+                    <p>
+                        Na Wok, o fogo alto faz a magia acontecer. A nossa missão é servir em Cristalina um Yakisoba com a alma e a qualidade que faria os nossos antepassados orgulhosos.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MENU / CARDÁPIO -->
+    <section id="cardapio" class="py-20 md:py-24 px-6 bg-nishi-bg relative border-t border-gray-200">
+        <div class="max-w-5xl mx-auto">
+            
+            <div class="text-center mb-16">
+                <h2 class="text-nishi-red font-bold tracking-[0.3em] uppercase text-sm mb-2">Menu</h2>
+                <h3 class="text-4xl md:text-5xl font-serif font-black text-nishi-black">Cardápio Autêntico</h3>
+                <p class="text-gray-500 mt-4 max-w-xl mx-auto">Ingredientes importados. Caldo apurado por horas. Fogo alto.</p>
+            </div>
+
+            <!-- YAKISOBA (O PRATO PRINCIPAL) -->
+            <div class="bg-white rounded-sm border border-gray-200 shadow-xl overflow-hidden mb-12">
+                <!-- Imagem Topo Yakisoba -->
+                <div class="w-full h-48 md:h-72 relative bg-gray-900">
+                    <img src="https://lh3.googleusercontent.com/d/1ov07pNf6JtsJq9_sZHKASwmLz7eq1cE7" alt="Yakisoba Original" class="absolute inset-0 w-full h-full object-cover opacity-90" onerror="this.src='https://placehold.co/1200x400/111827/FBBF24?text=Nishioka+Yakisoba'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
+                        <div>
+                            <span class="bg-nishi-red text-white text-[10px] md:text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-sm mb-2 inline-block">Especialidade da Casa</span>
+                            <h4 class="text-3xl md:text-4xl font-serif font-black text-white">O Verdadeiro Yakisoba</h4>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="p-6 md:p-10">
+                    <p class="text-gray-600 mb-8 leading-relaxed text-sm md:text-base">
+                        A nossa coroa de glória. Macarrão premium <strong>importado do Japão</strong>, frito à perfeição. Banhado no nosso caldo artesanal espesso (apurado lentamente em duas fases ricas em umami), frango suculento selado na Wok, acompanhado de couve-flor, brócolis fresco, cenoura, acelga, cebola meia lua, gengibre fresco e alho dourado.
+                    </p>
+                    
+                    <!-- OS 3 TAMANHOS -->
+                    <div class="grid md:grid-cols-3 gap-6">
+                        
+                        <!-- Tamanho 1: RONIN -->
+                        <div class="border border-gray-200 rounded-lg p-5 hover:border-nishi-red transition-colors relative group">
+                            <div class="absolute -top-3 left-4 bg-white px-2 text-nishi-red font-bold text-xs uppercase tracking-wider">Executivo</div>
+                            <h5 class="text-xl font-serif font-bold text-nishi-black mb-1 mt-2">Porção Ronin</h5>
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="bg-gray-100 text-gray-700 text-xs font-bold px-2 py-1 rounded">500g</span>
+                                <span class="text-xs text-gray-500"><i data-lucide="user" class="w-3 h-3 inline pb-0.5"></i> Para 1 Pessoa</span>
+                            </div>
+                            <p class="text-xs text-gray-500 mb-4 h-12">Como o guerreiro solitário. A escolha executiva perfeita e farta para uma refeição individual.</p>
+                            <div class="text-2xl font-black text-nishi-black group-hover:text-nishi-red transition-colors">R$ 42,90</div>
+                        </div>
+
+                        <!-- Tamanho 2: SHOGUN (Mais vendido) -->
+                        <div class="border-2 border-nishi-gold rounded-lg p-5 relative shadow-md bg-[#fffcf5] transform md:-translate-y-2">
+                            <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-nishi-gold text-nishi-black px-4 py-1 font-bold text-xs uppercase tracking-wider rounded-sm w-max shadow-sm">⭐ Mais Pedido</div>
+                            <h5 class="text-xl font-serif font-bold text-nishi-black mb-1 mt-3 text-center">Porção Shogun</h5>
+                            <div class="flex items-center justify-center gap-2 mb-3">
+                                <span class="bg-nishi-black text-white text-xs font-bold px-2 py-1 rounded">900g</span>
+                                <span class="text-xs text-gray-600"><i data-lucide="users" class="w-3 h-3 inline pb-0.5"></i> Para 2 Pessoas</span>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-4 h-12 text-center">O prato do grande general. O nosso tamanho clássico, ideal para um casal partilhar com abundância.</p>
+                            <div class="text-3xl font-black text-nishi-red text-center">R$ 68,90</div>
+                        </div>
+
+                        <!-- Tamanho 3: MATSURI -->
+                        <div class="border border-gray-200 rounded-lg p-5 hover:border-nishi-red transition-colors relative group">
+                            <div class="absolute -top-3 left-4 bg-white px-2 text-nishi-red font-bold text-xs uppercase tracking-wider">Família</div>
+                            <h5 class="text-xl font-serif font-bold text-nishi-black mb-1 mt-2">Porção Matsuri</h5>
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="bg-gray-100 text-gray-700 text-xs font-bold px-2 py-1 rounded">1.8 kg</span>
+                                <span class="text-xs text-gray-500"><i data-lucide="users" class="w-3 h-3 inline pb-0.5"></i> Para 4 a 5 Pessoas</span>
+                            </div>
+                            <p class="text-xs text-gray-500 mb-4 h-12">"Matsuri" significa Festival. A gigante panela de família para colocar no centro da mesa no domingo.</p>
+                            <div class="text-2xl font-black text-nishi-black group-hover:text-nishi-red transition-colors">R$ 124,90</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Outros Itens (Grid) -->
+            <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+                
+                <!-- Guioza -->
+                <div class="bg-white p-6 md:p-8 border border-gray-200 hover:border-nishi-gold transition-colors group relative flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <h4 class="text-xl md:text-2xl font-serif font-bold text-nishi-black group-hover:text-nishi-red transition-colors">Guioza Suíno</h4>
+                            <span class="text-lg font-bold text-nishi-black">R$ 32,90</span>
+                        </div>
+                        <p class="text-gray-500 text-sm mb-4">Pastéis japoneses com massa fina (6 unid.), recheados com carne suína moída e vegetais. Selados na frigideira e cozidos no vapor até dourarem.</p>
+                    </div>
+                    <span class="text-[10px] font-bold text-nishi-gold uppercase tracking-widest bg-yellow-50 px-2 py-1 rounded w-max">Entrada Clássica</span>
+                </div>
+
+
+                <!-- Missoshiro (NOVO) -->
+                <div class="bg-white p-6 md:p-8 border border-gray-200 hover:border-amber-600 transition-colors group relative flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <h4 class="text-xl md:text-2xl font-serif font-bold text-nishi-black group-hover:text-amber-700 transition-colors">Missoshiro</h4>
+                            <span class="text-lg font-bold text-nishi-black">R$ 16,90</span>
+                        </div>
+                        <p class="text-gray-500 text-sm mb-4">Caldo tradicional de soja fermentada, preparado com cubos de tofu macio, cebolinha fresca e alga. O acompanhamento quente essencial para equilibrar o paladar.</p>
+                    </div>
+                    <span class="text-[10px] font-bold text-amber-700 uppercase tracking-widest bg-amber-50 px-2 py-1 rounded w-max">Acompanhamento</span>
+                </div>
+
+
+
+                <!-- Chá -->
+                <div class="bg-white p-6 md:p-8 border border-gray-200 hover:border-nishi-gold transition-colors group relative flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <h4 class="text-xl md:text-2xl font-serif font-bold text-nishi-black group-hover:text-nishi-red transition-colors">Chá Verde Yuzu</h4>
+                            <span class="text-lg font-bold text-nishi-black">R$ 14,90</span>
+                        </div>
+                        <p class="text-gray-500 text-sm mb-4">A bebida ideal para limpar o paladar após o umami do Yakisoba. Chá verde gelado de infusão fria, levemente adoçado e com um toque cítrico refrescante.</p>
+                    </div>
+                    <span class="text-[10px] font-bold text-green-700 uppercase tracking-widest bg-green-50 px-2 py-1 rounded w-max">Bebida Artesanal</span>
+                </div>
+
+                <!-- Mochi -->
+                <div class="bg-white p-6 md:p-8 border border-gray-200 hover:border-nishi-gold transition-colors group relative md:col-span-2">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div class="md:w-3/4">
+                            <div class="flex justify-between items-start mb-2 md:mb-3">
+                                <h4 class="text-xl md:text-2xl font-serif font-bold text-nishi-black group-hover:text-nishi-red transition-colors">Mochi Tradicional</h4>
+                            </div>
+                            <p class="text-gray-500 text-sm mb-3">A clássica sobremesa japonesa feita de massa de arroz glutinoso incrivelmente macia (2 unid.).<br><strong>Recheios:</strong> Morango fresco ou pasta doce de feijão vermelho (Anko).</p>
+                            <span class="text-[10px] font-bold text-pink-600 uppercase tracking-widest bg-pink-50 px-2 py-1 rounded w-max inline-block">Sobremesa</span>
+                        </div>
+                        <div class="md:w-1/4 md:text-right">
+                            <span class="text-2xl font-bold text-nishi-black">R$ 22,90</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- RODAPÉ / CONTATO -->
+    <footer id="contato" class="bg-nishi-black text-gray-400 py-16 px-6 border-t-4 border-nishi-red">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-12">
+            <div>
+                <h4 class="text-white font-serif font-bold text-2xl mb-4 md:mb-6 uppercase tracking-widest">Nishioka</h4>
+                <p class="text-sm mb-6 max-w-sm">Trazendo a autenticidade e a precisão da culinária tradicional para o coração de Goiás.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-nishi-red text-white transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-nishi-red text-white transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="text-white font-bold text-xs md:text-sm tracking-[0.2em] uppercase mb-4 md:mb-6">Funcionamento</h4>
+                <ul class="space-y-3 text-sm">
+                    <li class="flex justify-between border-b border-gray-800 pb-2"><span>Terça a Quinta</span> <span class="text-white">18:30 - 22:30</span></li>
+                    <li class="flex justify-between border-b border-gray-800 pb-2"><span>Sexta a Sábado</span> <span class="text-white">18:30 - 23:30</span></li>
+                    <li class="flex justify-between border-b border-gray-800 pb-2"><span>Domingo</span> <span class="text-white">18:00 - 22:00</span></li>
+                    <li class="flex justify-between text-nishi-red font-bold pt-1"><span>Segunda</span> <span>Fechado</span></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-bold text-xs md:text-sm tracking-[0.2em] uppercase mb-4 md:mb-6">Faça o seu pedido</h4>
+                <ul class="space-y-4 text-sm mb-6">
+                    <li class="flex items-start gap-3">
+                        <i data-lucide="map-pin" class="w-5 h-5 text-nishi-red shrink-0 mt-0.5"></i>
+                        <span>Cristalina, Goiás<br>Apenas Delivery e Retirada</span>
+                    </li>
+                </ul>
+                <button class="w-full bg-[#25D366] hover:bg-[#128C7E] text-white font-bold py-3 md:py-4 rounded-sm flex items-center justify-center gap-2 transition-colors text-sm md:text-base shadow-lg shadow-green-900/20">
+                    <i data-lucide="message-circle" class="w-5 h-5"></i> Pedir pelo WhatsApp
+                </button>
+            </div>
+        </div>
+        <div class="max-w-6xl mx-auto mt-12 md:mt-16 pt-8 border-t border-gray-800 text-center text-xs text-gray-600">
+            &copy; 2026 Nishioka Yakisoba. Todos os direitos reservados.
+        </div>
+    </footer>
+
+    <script>
+        // Iniciar ícones
+        lucide.createIcons();
+    </script>
+</body>
+</html>
