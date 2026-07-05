@@ -1,308 +1,3203 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nishioka Yakisoba - Cristalina, GO</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Outfit', 'sans-serif'], serif: ['Noto Serif JP', 'serif'] },
-                    colors: { 
-                        nishi: { red: '#B91C1C', black: '#111827', gold: '#FBBF24', bg: '#FDFBF7' }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body { background-color: #FDFBF7; color: #111827; scroll-behavior: smooth; }
-        .hero-pattern {
-            background-color: #111827;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='#b91c1c' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>N.I.A. | Nishioka Inteligência em Automação</title>
+  <meta
+    name="description"
+    content="N.I.A. é uma consultoria especializada em implantação de soluções inteligentes, automações, integrações e sistemas personalizados para empresas que querem ganhar eficiência, escala e clareza operacional."
+  />
+
+  <style>
+    :root {
+      --bg: #060914;
+      --bg-soft: #0b1020;
+      --bg-card: rgba(255, 255, 255, 0.065);
+      --bg-card-strong: rgba(255, 255, 255, 0.1);
+      --border: rgba(255, 255, 255, 0.13);
+      --border-strong: rgba(255, 255, 255, 0.22);
+      --text: #f5f7fb;
+      --text-muted: #b7bfd5;
+      --text-soft: #8791ad;
+      --primary: #68e1fd;
+      --primary-2: #7c5cff;
+      --primary-3: #13f2a3;
+      --warning: #ffd166;
+      --danger: #ff6b6b;
+      --success: #13f2a3;
+      --shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
+      --radius-lg: 30px;
+      --radius-md: 22px;
+      --radius-sm: 14px;
+      --max: 1180px;
+      --font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(104, 225, 253, 0.16), transparent 34%),
+        radial-gradient(circle at top right, rgba(124, 92, 255, 0.18), transparent 36%),
+        radial-gradient(circle at 50% 20%, rgba(19, 242, 163, 0.09), transparent 28%),
+        var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, black, transparent 78%);
+      z-index: -3;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font-family: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .page-shell {
+      position: relative;
+      min-height: 100vh;
+      isolation: isolate;
+    }
+
+    #networkCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+      opacity: 0.55;
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.08;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 40px));
+      margin-inline: auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      background: linear-gradient(to bottom, rgba(6, 9, 20, 0.88), rgba(6, 9, 20, 0.62));
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .nav-inner {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 26px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: max-content;
+    }
+
+    .logo-mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      position: relative;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.72), transparent 18%),
+        linear-gradient(135deg, var(--primary), var(--primary-2) 50%, var(--primary-3));
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.18) inset,
+        0 20px 40px rgba(104, 225, 253, 0.16);
+    }
+
+    .logo-mark::before {
+      content: "";
+      position: absolute;
+      width: 90%;
+      height: 90%;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 14px;
+      transform: rotate(10deg);
+    }
+
+    .logo-mark span {
+      position: relative;
+      color: #08101d;
+      font-weight: 950;
+      font-size: 17px;
+      letter-spacing: -1px;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-size: 18px;
+      letter-spacing: 0.16em;
+      line-height: 1;
+    }
+
+    .brand-text small {
+      display: block;
+      margin-top: 5px;
+      color: var(--text-muted);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .nav-links a {
+      transition: 0.25s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: max-content;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-weight: 750;
+      font-size: 14px;
+      transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      color: #06101d;
+      background: linear-gradient(135deg, var(--primary), var(--primary-3));
+      box-shadow: 0 18px 45px rgba(19, 242, 163, 0.18);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 22px 60px rgba(104, 225, 253, 0.25);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      border-color: var(--border);
+      background: rgba(255, 255, 255, 0.055);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--border-strong);
+      background: rgba(255, 255, 255, 0.09);
+    }
+
+    .mobile-menu {
+      display: none;
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .hero {
+      padding: 88px 0 60px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 13px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.055);
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 650;
+      margin-bottom: 22px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+    }
+
+    .eyebrow-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--success);
+      box-shadow: 0 0 0 7px rgba(19, 242, 163, 0.12);
+    }
+
+    .hero h1 {
+      font-size: clamp(44px, 6vw, 82px);
+      line-height: 0.95;
+      letter-spacing: -0.075em;
+      max-width: 920px;
+      margin-bottom: 26px;
+    }
+
+    .hero h1 .gradient {
+      display: block;
+      background: linear-gradient(135deg, #ffffff 0%, var(--primary) 30%, var(--primary-2) 70%, var(--primary-3) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.08em;
+    }
+
+    .hero-lead {
+      color: var(--text-muted);
+      font-size: clamp(17px, 2vw, 21px);
+      line-height: 1.65;
+      max-width: 650px;
+      margin-bottom: 32px;
+    }
+
+    .hero-lead strong {
+      color: var(--text);
+      font-weight: 800;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+
+    .proof-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      color: var(--text-soft);
+      font-size: 13px;
+    }
+
+    .proof-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .proof-check {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(19, 242, 163, 0.13);
+      color: var(--success);
+      font-weight: 900;
+      font-size: 11px;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 630px;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(8px);
+      opacity: 0.7;
+      animation: floatOrb 8s ease-in-out infinite;
+    }
+
+    .orb.one {
+      width: 190px;
+      height: 190px;
+      top: 32px;
+      right: 30px;
+      background: radial-gradient(circle, rgba(104, 225, 253, 0.35), transparent 70%);
+    }
+
+    .orb.two {
+      width: 240px;
+      height: 240px;
+      bottom: 20px;
+      left: 0;
+      background: radial-gradient(circle, rgba(124, 92, 255, 0.26), transparent 70%);
+      animation-delay: -2s;
+    }
+
+    .orb.three {
+      width: 150px;
+      height: 150px;
+      top: 260px;
+      left: 110px;
+      background: radial-gradient(circle, rgba(19, 242, 163, 0.24), transparent 70%);
+      animation-delay: -4s;
+    }
+
+    @keyframes floatOrb {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(12px, -18px, 0) scale(1.08); }
+    }
+
+    .command-center {
+      position: relative;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 34px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.045)),
+        rgba(6, 9, 20, 0.72);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+
+    .command-center::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(104, 225, 253, 0.18), transparent 24%),
+        radial-gradient(circle at 80% 30%, rgba(124, 92, 255, 0.16), transparent 28%),
+        radial-gradient(circle at 40% 95%, rgba(19, 242, 163, 0.12), transparent 30%);
+      pointer-events: none;
+    }
+
+    .panel {
+      position: relative;
+      z-index: 2;
+      border-radius: 26px;
+      background: rgba(5, 9, 20, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+    }
+
+    .panel-topbar {
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.045);
+    }
+
+    .traffic {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .traffic span {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    .traffic span:nth-child(1) { background: #ff6b6b; }
+    .traffic span:nth-child(2) { background: #ffd166; }
+    .traffic span:nth-child(3) { background: #13f2a3; }
+
+    .panel-title {
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 750;
+      color: var(--success);
+    }
+
+    .live-badge span {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--success);
+      box-shadow: 0 0 0 6px rgba(19, 242, 163, 0.1);
+      animation: pulse 1.7s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.42; transform: scale(0.74); }
+    }
+
+    .panel-body {
+      padding: 20px;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 16px;
+    }
+
+    .dash-card {
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.095);
+      background: rgba(255, 255, 255, 0.055);
+      padding: 17px;
+      min-height: 126px;
+    }
+
+    .dash-card.wide {
+      grid-column: span 2;
+    }
+
+    .dash-label {
+      color: var(--text-soft);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 9px;
+    }
+
+    .dash-number {
+      font-size: 36px;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      margin-bottom: 7px;
+    }
+
+    .dash-number small {
+      color: var(--text-soft);
+      font-size: 14px;
+      letter-spacing: 0;
+      font-weight: 700;
+    }
+
+    .dash-desc {
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .bar-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .bar-item {
+      display: grid;
+      gap: 7px;
+    }
+
+    .bar-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .bar-track {
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--primary), var(--primary-3));
+      width: var(--w);
+      animation: growBar 1.6s ease forwards;
+      transform-origin: left;
+    }
+
+    @keyframes growBar {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+
+    .flow-map {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .flow-step {
+      position: relative;
+      border-radius: 18px;
+      padding: 15px 12px;
+      min-height: 118px;
+      background: rgba(255, 255, 255, 0.055);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .flow-step::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -14px;
+      width: 16px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--primary), transparent);
+    }
+
+    .flow-step:last-child::after {
+      display: none;
+    }
+
+    .flow-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, rgba(104, 225, 253, 0.18), rgba(124, 92, 255, 0.18));
+      color: var(--primary);
+      font-weight: 900;
+    }
+
+    .flow-step strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .flow-step p {
+      color: var(--text-soft);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+
+    .hero-note-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .floating-card {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      min-height: 100%;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(10, 16, 34, 0.82);
+      box-shadow: 0 22px 70px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    .floating-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at top right, rgba(104, 225, 253, 0.08), transparent 26%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent 32%);
+    }
+
+    .floating-card small {
+      position: relative;
+      z-index: 2;
+      display: block;
+      color: var(--text-soft);
+      font-weight: 750;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 11px;
+      margin-bottom: 9px;
+    }
+
+    .floating-card strong {
+      position: relative;
+      z-index: 2;
+      display: block;
+      font-size: 21px;
+      line-height: 1.15;
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
+    }
+
+    .floating-card p {
+      position: relative;
+      z-index: 2;
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    section {
+      padding: 82px 0;
+      position: relative;
+    }
+
+    .section-head {
+      max-width: 820px;
+      margin-bottom: 42px;
+    }
+
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 850;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .section-kicker::before {
+      content: "";
+      width: 26px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--primary), transparent);
+    }
+
+    .section-title {
+      font-size: clamp(32px, 4.4vw, 56px);
+      line-height: 1.03;
+      letter-spacing: -0.06em;
+      margin-bottom: 18px;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .logo-concept {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .identity-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.035)),
+        rgba(8, 13, 28, 0.72);
+      box-shadow: var(--shadow);
+      padding: 28px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .identity-card::before {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(104, 225, 253, 0.12), transparent 66%);
+      right: -80px;
+      top: -90px;
+      pointer-events: none;
+    }
+
+    .identity-mark-large {
+      position: relative;
+      z-index: 2;
+      min-height: 470px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 38px;
+      padding: 68px 44px 44px;
+      border-radius: 26px;
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      background:
+        linear-gradient(180deg, rgba(10, 18, 36, 0.88), rgba(10, 18, 36, 0.78)),
+        radial-gradient(circle at 50% 42%, rgba(104, 225, 253, 0.16), transparent 42%);
+      overflow: hidden;
+    }
+
+    .identity-mark-large::before {
+      content: "";
+      position: absolute;
+      inset: 34px;
+      border: 1px dashed rgba(255, 255, 255, 0.15);
+      border-radius: 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .identity-mark-large::after {
+      content: "";
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(104, 225, 253, 0.13), transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .nia-letters {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(14px, 2.2vw, 28px);
+      font-size: clamp(76px, 10vw, 132px);
+      font-weight: 950;
+      letter-spacing: -0.1em;
+      line-height: 0.9;
+      width: 100%;
+    }
+
+    .nia-letters .letter {
+      position: relative;
+      text-shadow: 0 26px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .nia-letters .letter.n,
+    .nia-letters .letter.a {
+      background: linear-gradient(135deg, #ffffff 0%, #dffaff 26%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .nia-letters .letter.i {
+      width: clamp(18px, 2.2vw, 26px);
+      height: clamp(126px, 11.5vw, 168px);
+      border-radius: 999px;
+      background: linear-gradient(180deg, var(--primary), var(--primary-2), var(--primary-3));
+      box-shadow:
+        0 0 0 12px rgba(104, 225, 253, 0.08),
+        0 0 48px rgba(104, 225, 253, 0.32);
+      font-size: 0;
+      letter-spacing: 0;
+      margin-inline: 4px;
+    }
+
+    .nia-letters .letter.i::before,
+    .nia-letters .letter.i::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.035);
+      pointer-events: none;
+    }
+
+    .nia-letters .letter.i::before { top: -70px; }
+    .nia-letters .letter.i::after { bottom: -70px; }
+
+    .identity-caption {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      max-width: 760px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      color: var(--text-soft);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .identity-caption > div {
+      min-width: 0;
+      padding: 17px 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.045);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+    }
+
+    .identity-caption strong {
+      color: var(--text);
+      display: block;
+      font-size: 15px;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .identity-text {
+      display: grid;
+      gap: 16px;
+    }
+
+    .brand-line {
+      padding: 24px;
+      border-radius: 24px;
+      background: rgba(8, 13, 28, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .brand-line > span {
+      display: block;
+      color: var(--text-soft);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 9px;
+    }
+
+    .brand-line strong {
+      display: block;
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.1;
+      letter-spacing: -0.05em;
+    }
+
+    .brand-line p {
+      margin-top: 12px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 36px;
+      padding: 0 13px;
+      border-radius: 999px;
+      background: rgba(104, 225, 253, 0.08);
+      border: 1px solid rgba(104, 225, 253, 0.16);
+      color: #dffaff;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: none;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .service-card {
+      position: relative;
+      min-height: 300px;
+      border-radius: var(--radius-lg);
+      padding: 26px;
+      border: 1px solid var(--border);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.035)),
+        rgba(255, 255, 255, 0.035);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
+      overflow: hidden;
+      transition:
+        transform 0.28s ease,
+        border-color 0.28s ease,
+        background 0.28s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(104, 225, 253, 0.28);
+      background:
+        linear-gradient(180deg, rgba(104, 225, 253, 0.095), rgba(255, 255, 255, 0.04)),
+        rgba(255, 255, 255, 0.04);
+    }
+
+    .service-card::before {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(104, 225, 253, 0.12), transparent 68%);
+      right: -90px;
+      top: -85px;
+      transition: 0.28s ease;
+    }
+
+    .service-card:hover::before {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+
+    .icon-box {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 22px;
+      background: linear-gradient(135deg, rgba(104, 225, 253, 0.15), rgba(124, 92, 255, 0.16));
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      color: var(--primary);
+      font-size: 23px;
+      font-weight: 900;
+    }
+
+    .service-card h3 {
+      position: relative;
+      z-index: 2;
+      font-size: 22px;
+      letter-spacing: -0.035em;
+      line-height: 1.12;
+      margin-bottom: 13px;
+    }
+
+    .service-card p {
+      position: relative;
+      z-index: 2;
+      color: var(--text-muted);
+      line-height: 1.62;
+      font-size: 15px;
+      margin-bottom: 22px;
+    }
+
+    .mini-list {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 10px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .mini-list li {
+      list-style: none;
+      display: flex;
+      gap: 9px;
+      line-height: 1.4;
+    }
+
+    .mini-list li::before {
+      content: "✓";
+      color: var(--success);
+      font-weight: 900;
+    }
+
+    .method {
+      display: grid;
+      grid-template-columns: 0.88fr 1.12fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .sticky-note {
+      position: sticky;
+      top: 108px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(104, 225, 253, 0.14), transparent 33%),
+        rgba(255, 255, 255, 0.055);
+      padding: 30px;
+      box-shadow: var(--shadow);
+    }
+
+    .sticky-note h3 {
+      font-size: 30px;
+      line-height: 1.1;
+      letter-spacing: -0.05em;
+      margin-bottom: 15px;
+    }
+
+    .sticky-note p {
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 22px;
+    }
+
+    .diagnostic-card {
+      margin-top: 22px;
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(0, 0, 0, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+    }
+
+    .diagnostic-card strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+
+    .diagnostic-card p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 16px;
+      counter-reset: steps;
+    }
+
+    .timeline-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 74px 1fr;
+      gap: 18px;
+      padding: 22px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background: rgba(8, 13, 28, 0.66);
+      overflow: hidden;
+    }
+
+    .timeline-item::before {
+      counter-increment: steps;
+      content: "0" counter(steps);
+      width: 58px;
+      height: 58px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(104, 225, 253, 0.18), rgba(19, 242, 163, 0.14));
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--primary);
+      font-weight: 950;
+    }
+
+    .timeline-item h3 {
+      font-size: 22px;
+      letter-spacing: -0.035em;
+      margin-bottom: 9px;
+    }
+
+    .timeline-item p {
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .timeline-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .tag {
+      padding: 7px 10px;
+      border-radius: 999px;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.055);
+      border: 1px solid rgba(255, 255, 255, 0.085);
+    }
+
+    .comparison-wrap {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.035)),
+        rgba(255, 255, 255, 0.035);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .comparison-head {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+    }
+
+    .comparison-head div {
+      padding: 24px 28px;
+    }
+
+    .comparison-head div:first-child {
+      border-right: 1px solid rgba(255, 255, 255, 0.09);
+    }
+
+    .comparison-head span {
+      display: block;
+      color: var(--text-soft);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .comparison-head strong {
+      font-size: 25px;
+      letter-spacing: -0.045em;
+    }
+
+    .comparison-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 92px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.075);
+    }
+
+    .comparison-row:last-child {
+      border-bottom: 0;
+    }
+
+    .comparison-cell {
+      padding: 22px 28px;
+      display: flex;
+      gap: 13px;
+      align-items: flex-start;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .comparison-cell:first-child {
+      border-right: 1px solid rgba(255, 255, 255, 0.075);
+    }
+
+    .bad,
+    .good {
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      font-size: 13px;
+      font-weight: 900;
+      margin-top: 1px;
+    }
+
+    .bad {
+      background: rgba(255, 107, 107, 0.12);
+      color: var(--danger);
+    }
+
+    .good {
+      background: rgba(19, 242, 163, 0.13);
+      color: var(--success);
+    }
+
+    .industries-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .industry-card {
+      border-radius: 24px;
+      padding: 22px;
+      min-height: 164px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.048);
+      transition: 0.25s ease;
+    }
+
+    .industry-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(104, 225, 253, 0.25);
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .industry-card span {
+      width: 42px;
+      height: 42px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: rgba(104, 225, 253, 0.1);
+      color: var(--primary);
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+
+    .industry-card h3 {
+      font-size: 18px;
+      letter-spacing: -0.03em;
+      margin-bottom: 9px;
+    }
+
+    .industry-card p {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .cases {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .case-card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.048);
+      padding: 28px;
+      min-height: 350px;
+      overflow: hidden;
+    }
+
+    .case-card::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(124, 92, 255, 0.13), transparent 70%);
+      right: -110px;
+      bottom: -120px;
+      pointer-events: none;
+    }
+
+    .case-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .case-card h3 {
+      font-size: 27px;
+      line-height: 1.08;
+      letter-spacing: -0.05em;
+      margin-bottom: 14px;
+      max-width: 430px;
+    }
+
+    .case-card p {
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+
+    .case-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .metric {
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      background: rgba(0, 0, 0, 0.14);
+      padding: 15px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 24px;
+      letter-spacing: -0.04em;
+      margin-bottom: 5px;
+    }
+
+    .metric span {
+      color: var(--text-soft);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .tech-showcase {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .stack-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.048);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .stack-card h3 {
+      font-size: 28px;
+      letter-spacing: -0.045em;
+      margin-bottom: 14px;
+    }
+
+    .stack-card p {
+      color: var(--text-muted);
+      line-height: 1.68;
+      margin-bottom: 24px;
+    }
+
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .stack-item {
+      min-height: 112px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.095);
+      background: rgba(255, 255, 255, 0.045);
+      padding: 18px;
+    }
+
+    .stack-item span {
+      display: block;
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 9px;
+    }
+
+    .stack-item strong {
+      display: block;
+      font-size: 17px;
+      margin-bottom: 8px;
+    }
+
+    .stack-item small {
+      display: block;
+      color: var(--text-soft);
+      line-height: 1.45;
+      font-size: 13px;
+    }
+
+    .terminal {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: #050812;
+      overflow: hidden;
+      min-height: 100%;
+      box-shadow: var(--shadow);
+    }
+
+    .terminal-header {
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.045);
+    }
+
+    .terminal-code {
+      padding: 24px;
+      color: #dbeafe;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 13px;
+      line-height: 1.75;
+      white-space: pre-wrap;
+    }
+
+    .code-comment { color: #8791ad; }
+    .code-key { color: #68e1fd; }
+    .code-value { color: #13f2a3; }
+    .code-string { color: #ffd166; }
+
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .price-card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background: rgba(8, 13, 28, 0.66);
+      padding: 28px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 460px;
+    }
+
+    .price-card.featured {
+      background:
+        radial-gradient(circle at 50% 0%, rgba(104, 225, 253, 0.16), transparent 35%),
+        rgba(255, 255, 255, 0.07);
+      border-color: rgba(104, 225, 253, 0.32);
+      box-shadow: 0 30px 90px rgba(104, 225, 253, 0.11);
+      transform: translateY(-12px);
+    }
+
+    .price-card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .price-card-title-wrap {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .price-badge {
+      position: static;
+      flex: 0 0 auto;
+      padding: 7px 12px;
+      border-radius: 999px;
+      color: #06101d;
+      background: linear-gradient(135deg, var(--primary), var(--primary-3));
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .price-card h3 {
+      font-size: 26px;
+      letter-spacing: -0.04em;
+      margin-bottom: 0;
+      line-height: 1.06;
+    }
+
+    .price-card .price-desc {
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 24px;
+      min-height: 78px;
+    }
+
+    .price {
+      font-size: 38px;
+      letter-spacing: -0.06em;
+      font-weight: 950;
+      margin-bottom: 22px;
+      line-height: 1.05;
+    }
+
+    .price small {
+      display: block;
+      color: var(--text-soft);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0;
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+
+    .price-card ul {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 26px;
+    }
+
+    .price-card li {
+      list-style: none;
+      color: var(--text-muted);
+      display: flex;
+      gap: 10px;
+      line-height: 1.45;
+      font-size: 14px;
+    }
+
+    .price-card li::before {
+      content: "✓";
+      color: var(--success);
+      font-weight: 950;
+    }
+
+    .price-card .btn {
+      margin-top: auto;
+      width: 100%;
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .faq-item {
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.048);
+      padding: 24px;
+    }
+
+    .faq-item h3 {
+      font-size: 19px;
+      letter-spacing: -0.025em;
+      margin-bottom: 10px;
+    }
+
+    .faq-item p {
+      color: var(--text-muted);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .cta-section {
+      padding: 92px 0 110px;
+    }
+
+    .cta-box {
+      position: relative;
+      border-radius: 38px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(104, 225, 253, 0.18), transparent 35%),
+        radial-gradient(circle at 80% 0%, rgba(124, 92, 255, 0.2), transparent 35%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.045));
+      box-shadow: var(--shadow);
+      padding: clamp(32px, 6vw, 68px);
+      overflow: hidden;
+    }
+
+    .cta-box::before {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border-radius: inherit;
+      pointer-events: none;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent 38%),
+        linear-gradient(315deg, rgba(19, 242, 163, 0.08), transparent 32%);
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .cta-content h2 {
+      font-size: clamp(34px, 5vw, 62px);
+      line-height: 1;
+      letter-spacing: -0.065em;
+      margin-bottom: 18px;
+      max-width: 760px;
+    }
+
+    .cta-content p {
+      color: var(--text-muted);
+      font-size: 18px;
+      line-height: 1.7;
+      max-width: 720px;
+    }
+
+    .cta-actions {
+      display: grid;
+      gap: 12px;
+      min-width: 280px;
+    }
+
+    .contact-card {
+      margin-top: 22px;
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(0, 0, 0, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(0, 0, 0, 0.18);
+      padding: 38px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      color: var(--text-soft);
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: 0.7s ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1060px) {
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-menu {
+        display: grid;
+        place-items: center;
+      }
+
+      .hero-grid,
+      .logo-concept,
+      .method,
+      .tech-showcase,
+      .cta-content {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: auto;
+      }
+
+      .hero-note-grid,
+      .cards-grid,
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .price-card.featured {
+        transform: none;
+      }
+
+      .sticky-note {
+        position: relative;
+        top: auto;
+      }
+    }
+
+    @media (max-width: 780px) {
+      .container {
+        width: min(100% - 28px, var(--max));
+      }
+
+      .hero {
+        padding-top: 56px;
+      }
+
+      .nav-inner {
+        min-height: 68px;
+      }
+
+      .brand-text small {
+        display: none;
+      }
+
+      .nav-cta .btn {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: clamp(40px, 13vw, 68px);
+      }
+
+      .hero-actions {
+        align-items: stretch;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+      }
+
+      .dashboard-grid,
+      .flow-map,
+      .comparison-head,
+      .comparison-row,
+      .industries-grid,
+      .cases,
+      .stack-grid,
+      .faq-grid,
+      .case-metrics,
+      .hero-note-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .dash-card.wide {
+        grid-column: auto;
+      }
+
+      .flow-step::after {
+        display: none;
+      }
+
+      .comparison-head div:first-child,
+      .comparison-cell:first-child {
+        border-right: 0;
+      }
+
+      .comparison-head div:first-child,
+      .comparison-row .comparison-cell:first-child {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.075);
+      }
+
+      .identity-mark-large {
+        min-height: auto;
+        padding: 58px 22px 28px;
+        gap: 30px;
+      }
+
+      .identity-mark-large::before {
+        inset: 20px;
+      }
+
+      .nia-letters {
+        font-size: clamp(62px, 20vw, 104px);
+        gap: 12px;
+      }
+
+      .nia-letters .letter.i {
+        height: clamp(102px, 28vw, 132px);
+      }
+
+      .identity-caption {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline-item {
+        grid-template-columns: 1fr;
+      }
+
+      .section-title {
+        letter-spacing: -0.05em;
+      }
+
+      .pill-list {
+        gap: 8px;
+      }
+
+      .pill {
+        min-height: 34px;
+        padding-inline: 11px;
+        font-size: 12px;
+      }
+
+      section {
+        padding: 62px 0;
+      }
+
+      .cta-section {
+        padding-bottom: 76px;
+      }
+
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
-<body class="antialiased">
 
-    <!-- NAVIGATION -->
-    <nav class="fixed w-full bg-nishi-bg/95 backdrop-blur-md z-50 border-b border-gray-200">
-        <div class="max-w-6xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-nishi-red rounded-full flex items-center justify-center">
-                    <div class="w-3 h-3 bg-white rounded-full"></div>
-                </div>
-                <span class="font-serif font-black tracking-widest uppercase text-xl">Nishioka</span>
-            </div>
-            <div class="hidden md:flex gap-8 font-semibold text-sm tracking-widest uppercase text-gray-600">
-                <a href="#historia" class="hover:text-nishi-red transition-colors">História</a>
-                <a href="#cardapio" class="hover:text-nishi-red transition-colors">Cardápio</a>
-                <a href="#contato" class="hover:text-nishi-red transition-colors">Contato</a>
-            </div>
-            <a href="#cardapio" class="bg-nishi-black text-white px-4 md:px-5 py-2 rounded-sm font-bold text-xs md:text-sm uppercase tracking-wider hover:bg-nishi-red transition-colors">
-                Fazer Pedido
-            </a>
+<body>
+  <canvas id="networkCanvas" aria-hidden="true"></canvas>
+  <div class="noise" aria-hidden="true"></div>
+
+  <div class="page-shell">
+    <header class="nav">
+      <div class="container nav-inner">
+        <a href="#top" class="brand" aria-label="N.I.A. Página inicial">
+          <div class="logo-mark">
+            <span>NIA</span>
+          </div>
+
+          <div class="brand-text">
+            <strong>N.I.A.</strong>
+            <small>Nishioka Inteligência em Automação</small>
+          </div>
+        </a>
+
+        <nav class="nav-links" aria-label="Navegação principal">
+          <a href="#sobre">Marca</a>
+          <a href="#solucoes">Soluções</a>
+          <a href="#metodo">Método</a>
+          <a href="#segmentos">Segmentos</a>
+          <a href="#planos">Planos</a>
+          <a href="#contato">Contato</a>
+        </nav>
+
+        <div class="nav-cta">
+          <a class="btn btn-secondary" href="#metodo">Ver método</a>
+          <a class="btn btn-primary" href="#contato">Diagnóstico inicial</a>
+          <button class="mobile-menu" id="mobileMenu" aria-label="Abrir menu">☰</button>
         </div>
-    </nav>
+      </div>
+    </header>
 
-    <!-- HERO SECTION -->
-    <section class="relative pt-32 pb-20 px-6 hero-pattern min-h-[90vh] flex items-center overflow-hidden">
-        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center w-full">
-            
-            <div class="text-white z-10">
-                <div class="inline-block px-3 py-1 bg-nishi-red/20 border border-nishi-red text-nishi-red font-bold tracking-widest uppercase text-xs mb-6 rounded-sm">
-                    Cristalina, GO
+    <main id="top">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy reveal">
+            <div class="eyebrow">
+              <span class="eyebrow-dot"></span>
+              Consultoria em automação, integração e soluções inteligentes
+            </div>
+
+            <h1>
+              Engenharia aplicada para empresas que precisam
+              <span class="gradient">operar melhor.</span>
+            </h1>
+
+            <p class="hero-lead">
+              A <strong>N.I.A. — Nishioka Inteligência em Automação</strong> implanta soluções inteligentes sob medida para organizar processos, reduzir trabalho manual, integrar sistemas e transformar gargalos operacionais em vantagem competitiva.
+            </p>
+
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#contato">Solicitar diagnóstico</a>
+              <a class="btn btn-secondary" href="#solucoes">Conhecer soluções</a>
+            </div>
+
+            <div class="proof-row">
+              <span class="proof-item">
+                <span class="proof-check">✓</span>
+                Automação estratégica
+              </span>
+              <span class="proof-item">
+                <span class="proof-check">✓</span>
+                Integração de ferramentas
+              </span>
+              <span class="proof-item">
+                <span class="proof-check">✓</span>
+                Sistemas personalizados
+              </span>
+              <span class="proof-item">
+                <span class="proof-check">✓</span>
+                Implantação acompanhada
+              </span>
+            </div>
+          </div>
+
+          <div class="hero-visual reveal">
+            <div class="orb one"></div>
+            <div class="orb two"></div>
+            <div class="orb three"></div>
+
+            <div class="command-center">
+              <div class="panel">
+                <div class="panel-topbar">
+                  <div class="traffic">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+
+                  <div class="panel-title">N.I.A. Command Center</div>
+
+                  <div class="live-badge">
+                    <span></span>
+                    Online
+                  </div>
                 </div>
-                <h1 class="text-5xl md:text-7xl font-serif font-black leading-tight mb-6">
-                    O Sabor da<br>
-                    <span class="text-nishi-gold">Paciência.</span>
-                </h1>
-                <p class="text-gray-300 text-lg md:text-xl font-light mb-8 max-w-md leading-relaxed">
-                    Macarrão artesanal importado do Japão. Um caldo que leva horas a apurar. A verdadeira essência da comida de rua nipónica, servida na sua mesa.
+
+                <div class="panel-body">
+                  <div class="dashboard-grid">
+                    <div class="dash-card">
+                      <div class="dash-label">Processos mapeados</div>
+                      <div class="dash-number" data-count="42">0</div>
+                      <p class="dash-desc">Fluxos analisados para identificar gargalos, retrabalho e oportunidades de automação.</p>
+                    </div>
+
+                    <div class="dash-card">
+                      <div class="dash-label">Tempo manual reduzido</div>
+                      <div class="dash-number" data-count="67">0<small>%</small></div>
+                      <p class="dash-desc">Meta de eficiência operacional por meio de integração, automação e padronização.</p>
+                    </div>
+
+                    <div class="dash-card wide">
+                      <div class="dash-label">Maturidade operacional</div>
+
+                      <div class="bar-list">
+                        <div class="bar-item">
+                          <div class="bar-title">
+                            <span>Processos digitais</span>
+                            <span>86%</span>
+                          </div>
+                          <div class="bar-track">
+                            <div class="bar-fill" style="--w: 86%;"></div>
+                          </div>
+                        </div>
+
+                        <div class="bar-item">
+                          <div class="bar-title">
+                            <span>Integrações entre sistemas</span>
+                            <span>74%</span>
+                          </div>
+                          <div class="bar-track">
+                            <div class="bar-fill" style="--w: 74%;"></div>
+                          </div>
+                        </div>
+
+                        <div class="bar-item">
+                          <div class="bar-title">
+                            <span>Decisão baseada em dados</span>
+                            <span>69%</span>
+                          </div>
+                          <div class="bar-track">
+                            <div class="bar-fill" style="--w: 69%;"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="dash-card wide">
+                      <div class="dash-label">Fluxo de implantação</div>
+
+                      <div class="flow-map">
+                        <div class="flow-step">
+                          <div class="flow-icon">01</div>
+                          <strong>Diagnóstico</strong>
+                          <p>Entendimento da operação real e dos gargalos.</p>
+                        </div>
+
+                        <div class="flow-step">
+                          <div class="flow-icon">02</div>
+                          <strong>Arquitetura</strong>
+                          <p>Desenho da solução e integrações necessárias.</p>
+                        </div>
+
+                        <div class="flow-step">
+                          <div class="flow-icon">03</div>
+                          <strong>Implantação</strong>
+                          <p>Configuração, automação, testes e ajustes.</p>
+                        </div>
+
+                        <div class="flow-step">
+                          <div class="flow-icon">04</div>
+                          <strong>Evolução</strong>
+                          <p>Medição, treinamento e melhoria contínua.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hero-note-grid">
+                <div class="floating-card">
+                  <small>Slogan principal</small>
+                  <strong>Menos operação manual. Mais inteligência em movimento.</strong>
+                  <p>Um posicionamento amplo para empresas que querem tecnologia aplicada de forma prática.</p>
+                </div>
+
+                <div class="floating-card">
+                  <small>Promessa da marca</small>
+                  <strong>Da ideia à implantação.</strong>
+                  <p>A N.I.A. não apenas sugere ferramentas. Ela estrutura, conecta, implementa e acompanha.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sobre">
+        <div class="container">
+          <div class="section-head reveal">
+            <div class="section-kicker">Identidade estratégica</div>
+            <h2 class="section-title">Uma marca para unir autoridade técnica com clareza comercial.</h2>
+            <p class="section-desc">
+              A N.I.A. nasce para traduzir tecnologia complexa em soluções úteis, implantáveis e mensuráveis. O foco não é vender “IA” como moda. O foco é resolver problemas reais com engenharia, automação, integração e inteligência operacional.
+            </p>
+          </div>
+
+          <div class="logo-concept">
+            <div class="identity-card reveal">
+              <div class="identity-mark-large">
+                <div class="nia-letters" aria-label="NIA">
+                  <span class="letter n">N</span>
+                  <span class="letter i">I</span>
+                  <span class="letter a">A</span>
+                </div>
+
+                <div class="identity-caption">
+                  <div>
+                    <strong>N e A como pilares</strong>
+                    Nishioka + Automação sustentam a marca.
+                  </div>
+
+                  <div>
+                    <strong>I como conector</strong>
+                    Inteligência, integração e caminho de dados.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="identity-text reveal">
+              <div class="brand-line">
+                <span>Nome completo</span>
+                <strong>N.I.A. — Nishioka Inteligência em Automação</strong>
+                <p>
+                  Um nome com sobrenome forte, identidade técnica e amplitude para atender diferentes setores: comércio, serviços, clínicas, escritórios, educação, logística, financeiro, atendimento, vendas e operações internas.
                 </p>
-                <div class="flex gap-4">
-                    <a href="#cardapio" class="bg-nishi-red text-white px-8 py-4 font-bold uppercase tracking-wider rounded-sm hover:bg-red-800 transition-colors w-full md:w-auto text-center">Ver Cardápio</a>
-                </div>
-            </div>
+              </div>
 
-            <div class="relative z-10 flex justify-center md:justify-end mt-10 md:mt-0">
-                <!-- Imagem Ghibli (Google Drive) -->
-                <div class="relative">
-                    <div class="absolute inset-0 bg-nishi-gold transform translate-x-3 translate-y-3 md:translate-x-4 md:translate-y-4 rounded-sm"></div>
-                    <img src="https://lh3.googleusercontent.com/d/1s-IiGw89huM2DfZeNQ1K4iTItqrjYM7W" alt="Yakisoba Ghibli" class="relative z-10 w-full max-w-[300px] md:max-w-md h-auto object-cover rounded-sm border-4 border-nishi-black shadow-2xl" onerror="this.src='https://placehold.co/600x400/111827/B91C1C?text=Nishioka+Yakisoba'">
-                    
-                    <!-- Selo flutuante -->
-                    <div class="absolute -bottom-4 -left-4 md:-bottom-6 md:-left-6 bg-white p-3 md:p-4 rounded-full border-2 border-nishi-black shadow-lg z-20 flex items-center justify-center w-24 h-24 md:w-28 md:h-28 text-center transform -rotate-12">
-                        <span class="font-serif font-black text-nishi-red text-[10px] md:text-sm uppercase leading-tight">Massa<br>Importada<br>🇯🇵</span>
-                    </div>
-                </div>
-            </div>
+              <div class="brand-line">
+                <span>Slogan recomendado</span>
+                <strong>Menos operação manual. Mais inteligência em movimento.</strong>
+                <p>
+                  Esse slogan evita limitar a marca a atendimento ou a um único sistema. Ele comunica transformação operacional, agilidade e inteligência aplicada ao dia a dia da empresa.
+                </p>
 
-            <!-- Palavra Nishioka em japonês gigante no fundo -->
-            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-5 pointer-events-none text-[40vw] md:text-[25vw] font-serif font-black text-white select-none whitespace-nowrap">
-                西岡
+                <div class="pill-list">
+                  <span class="pill">Consultoria</span>
+                  <span class="pill">Automação</span>
+                  <span class="pill">Integração</span>
+                  <span class="pill">Dados</span>
+                  <span class="pill">Sistemas</span>
+                  <span class="pill">Implantação</span>
+                </div>
+              </div>
+
+              <div class="brand-line">
+                <span>Variações de slogan</span>
+                <strong>Outras linhas possíveis para campanha</strong>
+                <p>
+                  “Tecnologia que trabalha junto com o seu negócio.”<br />
+                  “Soluções inteligentes para empresas mais eficientes.”<br />
+                  “Automação com estratégia, implantação e resultado.”<br />
+                  “Sua operação mais leve, conectada e inteligente.”
+                </p>
+              </div>
             </div>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- HISTÓRIA & MISSÃO -->
-    <section id="historia" class="py-20 md:py-24 px-6 bg-white relative overflow-hidden">
-        <div class="absolute top-0 right-10 text-[8rem] md:text-[10rem] font-serif text-gray-50 opacity-50 select-none hidden md:block">文化</div>
-        
-        <div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-12 items-center">
-            
-            <div class="md:col-span-4 flex justify-center relative order-2 md:order-1 mt-8 md:mt-0">
-                <svg width="200" height="200" md:width="250" md:height="250" viewBox="0 0 100 100" class="drop-shadow-xl relative z-10">
-                    <circle cx="50" cy="50" r="46" fill="#B91C1C" />
-                    <line x1="75" y1="15" x2="35" y2="55" stroke="#FBBF24" stroke-width="3" stroke-linecap="round"/>
-                    <line x1="85" y1="25" x2="45" y2="65" stroke="#FBBF24" stroke-width="3" stroke-linecap="round"/>
-                    <path d="M40 55 Q 45 40 55 50 T 70 45" fill="none" stroke="#FDFBF7" stroke-width="4" stroke-linecap="round"/>
-                    <path d="M35 60 Q 50 45 60 60 T 75 55" fill="none" stroke="#FDFBF7" stroke-width="4" stroke-linecap="round"/>
-                    <path d="M30 65 Q 45 50 55 65 T 70 60" fill="none" stroke="#FDFBF7" stroke-width="4" stroke-linecap="round"/>
-                    <path d="M20 60 C 20 85, 80 85, 80 60 Z" fill="#111827" />
-                    <path d="M20 60 Q 50 65 80 60" fill="none" stroke="#FBBF24" stroke-width="2" />
-                </svg>
-            </div>
+      <section id="solucoes">
+        <div class="container">
+          <div class="section-head reveal">
+            <div class="section-kicker">O que a N.I.A. faz</div>
+            <h2 class="section-title">Consultoria para transformar processos soltos em sistemas inteligentes.</h2>
+            <p class="section-desc">
+              A N.I.A. atua desde o entendimento do problema até a implantação da solução. O objetivo é fazer a tecnologia entrar na empresa de forma organizada, segura, útil e compatível com a rotina real da equipe.
+            </p>
+          </div>
 
-            <div class="md:col-span-8 order-1 md:order-2">
-                <h2 class="text-nishi-red font-bold tracking-[0.3em] uppercase text-sm mb-2">A Família Nishioka</h2>
-                <h3 class="text-3xl md:text-5xl font-serif font-black text-nishi-black mb-8 leading-tight">O compromisso com o tempo e o ingrediente.</h3>
-                
-                <div class="space-y-6 text-gray-600 leading-relaxed text-base md:text-lg font-light">
-                    <p>
-                        O sobrenome <strong class="text-nishi-black font-bold">Nishioka (西岡)</strong> significa "Colina do Oeste". Do oriente para o coração do cerrado goiano, a Chef Aska trouxe uma filosofia inegociável: <em>o umami perfeito não aceita atalhos.</em>
-                    </p>
-                    <p>
-                        Viajamos quilómetros para selecionar os vegetais mais frescos e importamos diretamente a massa japonesa autêntica. Enquanto o mercado ferve molhos prontos em minutos, o nosso caldo base exige <strong class="text-nishi-red font-bold">horas de fogo lento</strong>. Extraímos cada nota de sabor de frangos selecionados até atingir um caldo denso e rico em colágeno.
-                    </p>
-                    <p>
-                        Na Wok, o fogo alto faz a magia acontecer. A nossa missão é servir em Cristalina um Yakisoba com a alma e a qualidade que faria os nossos antepassados orgulhosos.
-                    </p>
-                </div>
-            </div>
+          <div class="cards-grid">
+            <article class="service-card reveal">
+              <div class="icon-box">↔</div>
+              <h3>Automação de processos internos</h3>
+              <p>
+                Fluxos manuais, repetitivos e demorados podem ser transformados em rotinas automáticas, com regras claras, registros e alertas.
+              </p>
+              <ul class="mini-list">
+                <li>Redução de retrabalho operacional.</li>
+                <li>Padronização de tarefas recorrentes.</li>
+                <li>Alertas, aprovações e acompanhamento.</li>
+              </ul>
+            </article>
+
+            <article class="service-card reveal">
+              <div class="icon-box">⌘</div>
+              <h3>Integração entre ferramentas</h3>
+              <p>
+                Sistemas que não conversam entre si criam gargalos. A N.I.A. conecta plataformas, planilhas, CRMs, ERPs, bancos de dados e APIs.
+              </p>
+              <ul class="mini-list">
+                <li>Menos cópia e cola entre sistemas.</li>
+                <li>Dados fluindo de forma estruturada.</li>
+                <li>Operação mais conectada e rastreável.</li>
+              </ul>
+            </article>
+
+            <article class="service-card reveal">
+              <div class="icon-box">▣</div>
+              <h3>Sistemas sob medida</h3>
+              <p>
+                Quando uma ferramenta pronta não resolve, a N.I.A. pode desenhar soluções específicas para o fluxo, o time e a regra de negócio.
+              </p>
+              <ul class="mini-list">
+                <li>Painéis administrativos.</li>
+                <li>Fluxos personalizados.</li>
+                <li>Aplicações internas para gestão.</li>
+              </ul>
+            </article>
+
+            <article class="service-card reveal">
+              <div class="icon-box">◈</div>
+              <h3>Consultoria de implantação</h3>
+              <p>
+                Não basta escolher uma ferramenta. É preciso implantar, testar, adaptar, treinar e garantir que a equipe consiga usar no dia a dia.
+              </p>
+              <ul class="mini-list">
+                <li>Mapeamento da operação.</li>
+                <li>Plano de implantação por fases.</li>
+                <li>Acompanhamento e melhoria contínua.</li>
+              </ul>
+            </article>
+
+            <article class="service-card reveal">
+              <div class="icon-box">◌</div>
+              <h3>Inteligência aplicada à operação</h3>
+              <p>
+                Uso estratégico de soluções inteligentes para apoiar análise, organização, respostas, classificação, geração de documentos e tomada de decisão.
+              </p>
+              <ul class="mini-list">
+                <li>Assistentes internos sob regra.</li>
+                <li>Triagem de informações.</li>
+                <li>Relatórios e resumos operacionais.</li>
+              </ul>
+            </article>
+
+            <article class="service-card reveal">
+              <div class="icon-box">⌁</div>
+              <h3>Dashboards e visão gerencial</h3>
+              <p>
+                O que não é medido fica invisível. A N.I.A. estrutura indicadores para que a empresa enxergue gargalos, demanda e desempenho.
+              </p>
+              <ul class="mini-list">
+                <li>Indicadores operacionais.</li>
+                <li>Controle de produtividade.</li>
+                <li>Visão clara para decisões.</li>
+              </ul>
+            </article>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- MENU / CARDÁPIO -->
-    <section id="cardapio" class="py-20 md:py-24 px-6 bg-nishi-bg relative border-t border-gray-200">
-        <div class="max-w-5xl mx-auto">
-            
-            <div class="text-center mb-16">
-                <h2 class="text-nishi-red font-bold tracking-[0.3em] uppercase text-sm mb-2">Menu</h2>
-                <h3 class="text-4xl md:text-5xl font-serif font-black text-nishi-black">Cardápio Autêntico</h3>
-                <p class="text-gray-500 mt-4 max-w-xl mx-auto">Ingredientes importados. Caldo apurado por horas. Fogo alto.</p>
+      <section id="metodo">
+        <div class="container">
+          <div class="section-head reveal">
+            <div class="section-kicker">Método de implantação</div>
+            <h2 class="section-title">A N.I.A. não chega vendendo ferramenta. Ela começa entendendo o negócio.</h2>
+            <p class="section-desc">
+              A consultoria segue um processo simples, técnico e prático: entender, mapear, priorizar, implantar e evoluir. Assim a empresa não compra tecnologia por impulso; ela investe em soluções que fazem sentido.
+            </p>
+          </div>
+
+          <div class="method">
+            <aside class="sticky-note reveal">
+              <h3>Diagnóstico antes da solução.</h3>
+              <p>
+                O maior erro de uma empresa é tentar automatizar um processo confuso sem antes entender onde está o gargalo. A N.I.A. atua como ponte entre estratégia, engenharia e operação.
+              </p>
+
+              <a class="btn btn-primary" href="#contato">Quero meu diagnóstico</a>
+
+              <div class="diagnostic-card">
+                <strong>O que o diagnóstico busca responder?</strong>
+                <p>
+                  Onde a empresa perde tempo? Onde existem erros repetidos? Quais tarefas dependem demais de uma pessoa? Quais sistemas não conversam? Qual automação gera resultado primeiro?
+                </p>
+              </div>
+            </aside>
+
+            <div class="timeline">
+              <article class="timeline-item reveal">
+                <div>
+                  <h3>Levantamento do cenário atual</h3>
+                  <p>
+                    Conversa com a empresa para entender rotina, ferramentas usadas, volume de trabalho, pontos de dor, tarefas repetitivas e objetivos comerciais.
+                  </p>
+                  <div class="timeline-tags">
+                    <span class="tag">Entrevista</span>
+                    <span class="tag">Processos</span>
+                    <span class="tag">Gargalos</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="timeline-item reveal">
+                <div>
+                  <h3>Mapeamento técnico e operacional</h3>
+                  <p>
+                    Organização dos fluxos em etapas visuais: entrada de informação, processamento, validação, responsável, sistema usado, erro comum e saída esperada.
+                  </p>
+                  <div class="timeline-tags">
+                    <span class="tag">Fluxograma</span>
+                    <span class="tag">Regras</span>
+                    <span class="tag">Prioridades</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="timeline-item reveal">
+                <div>
+                  <h3>Desenho da solução ideal</h3>
+                  <p>
+                    Definição do que deve ser automatizado, integrado ou construído. Nesta fase, a N.I.A. propõe a arquitetura da solução, sem exagero e sem complexidade desnecessária.
+                  </p>
+                  <div class="timeline-tags">
+                    <span class="tag">Arquitetura</span>
+                    <span class="tag">Integração</span>
+                    <span class="tag">Escopo</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="timeline-item reveal">
+                <div>
+                  <h3>Implantação controlada</h3>
+                  <p>
+                    Desenvolvimento ou configuração da solução em ciclos curtos, com testes, validações e ajustes. O objetivo é colocar algo funcional em operação com segurança.
+                  </p>
+                  <div class="timeline-tags">
+                    <span class="tag">Construção</span>
+                    <span class="tag">Testes</span>
+                    <span class="tag">Validação</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="timeline-item reveal">
+                <div>
+                  <h3>Treinamento e documentação</h3>
+                  <p>
+                    A solução precisa ser entendida pela equipe. Por isso, a N.I.A. entrega orientação, documentação simples, fluxo de uso e boas práticas para continuidade.
+                  </p>
+                  <div class="timeline-tags">
+                    <span class="tag">Treinamento</span>
+                    <span class="tag">Manual</span>
+                    <span class="tag">Adoção</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="timeline-item reveal">
+                <div>
+                  <h3>Medição e evolução</h3>
+                  <p>
+                    Depois da implantação, a solução pode evoluir com base em dados reais: redução de tempo, diminuição de erro, ganho de produtividade e novas oportunidades.
+                  </p>
+                  <div class="timeline-tags">
+                    <span class="tag">Métricas</span>
+                    <span class="tag">Melhoria</span>
+                    <span class="tag">Escala</span>
+                  </div>
+                </div>
+              </article>
             </div>
-
-            <!-- YAKISOBA (O PRATO PRINCIPAL) -->
-            <div class="bg-white rounded-sm border border-gray-200 shadow-xl overflow-hidden mb-12">
-                <!-- Imagem Topo Yakisoba -->
-                <div class="w-full h-48 md:h-72 relative bg-gray-900">
-                    <img src="https://lh3.googleusercontent.com/d/1ov07pNf6JtsJq9_sZHKASwmLz7eq1cE7" alt="Yakisoba Original" class="absolute inset-0 w-full h-full object-cover opacity-90" onerror="this.src='https://placehold.co/1200x400/111827/FBBF24?text=Nishioka+Yakisoba'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
-                        <div>
-                            <span class="bg-nishi-red text-white text-[10px] md:text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-sm mb-2 inline-block">Especialidade da Casa</span>
-                            <h4 class="text-3xl md:text-4xl font-serif font-black text-white">O Verdadeiro Yakisoba</h4>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="p-6 md:p-10">
-                    <p class="text-gray-600 mb-8 leading-relaxed text-sm md:text-base">
-                        A nossa coroa de glória. Macarrão premium <strong>importado do Japão</strong>, frito à perfeição. Banhado no nosso caldo artesanal espesso (apurado lentamente em duas fases ricas em umami), frango suculento selado na Wok, acompanhado de couve-flor, brócolis fresco, cenoura, acelga, cebola meia lua, gengibre fresco e alho dourado.
-                    </p>
-                    
-                    <!-- OS 3 TAMANHOS -->
-                    <div class="grid md:grid-cols-3 gap-6">
-                        
-                        <!-- Tamanho 1: RONIN -->
-                        <div class="border border-gray-200 rounded-lg p-5 hover:border-nishi-red transition-colors relative group">
-                            <div class="absolute -top-3 left-4 bg-white px-2 text-nishi-red font-bold text-xs uppercase tracking-wider">Executivo</div>
-                            <h5 class="text-xl font-serif font-bold text-nishi-black mb-1 mt-2">Porção Ronin</h5>
-                            <div class="flex items-center gap-2 mb-3">
-                                <span class="bg-gray-100 text-gray-700 text-xs font-bold px-2 py-1 rounded">500g</span>
-                                <span class="text-xs text-gray-500"><i data-lucide="user" class="w-3 h-3 inline pb-0.5"></i> Para 1 Pessoa</span>
-                            </div>
-                            <p class="text-xs text-gray-500 mb-4 h-12">Como o guerreiro solitário. A escolha executiva perfeita e farta para uma refeição individual.</p>
-                            <div class="text-2xl font-black text-nishi-black group-hover:text-nishi-red transition-colors">R$ 42,90</div>
-                        </div>
-
-                        <!-- Tamanho 2: SHOGUN (Mais vendido) -->
-                        <div class="border-2 border-nishi-gold rounded-lg p-5 relative shadow-md bg-[#fffcf5] transform md:-translate-y-2">
-                            <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-nishi-gold text-nishi-black px-4 py-1 font-bold text-xs uppercase tracking-wider rounded-sm w-max shadow-sm">⭐ Mais Pedido</div>
-                            <h5 class="text-xl font-serif font-bold text-nishi-black mb-1 mt-3 text-center">Porção Shogun</h5>
-                            <div class="flex items-center justify-center gap-2 mb-3">
-                                <span class="bg-nishi-black text-white text-xs font-bold px-2 py-1 rounded">900g</span>
-                                <span class="text-xs text-gray-600"><i data-lucide="users" class="w-3 h-3 inline pb-0.5"></i> Para 2 Pessoas</span>
-                            </div>
-                            <p class="text-xs text-gray-600 mb-4 h-12 text-center">O prato do grande general. O nosso tamanho clássico, ideal para um casal partilhar com abundância.</p>
-                            <div class="text-3xl font-black text-nishi-red text-center">R$ 68,90</div>
-                        </div>
-
-                        <!-- Tamanho 3: MATSURI -->
-                        <div class="border border-gray-200 rounded-lg p-5 hover:border-nishi-red transition-colors relative group">
-                            <div class="absolute -top-3 left-4 bg-white px-2 text-nishi-red font-bold text-xs uppercase tracking-wider">Família</div>
-                            <h5 class="text-xl font-serif font-bold text-nishi-black mb-1 mt-2">Porção Matsuri</h5>
-                            <div class="flex items-center gap-2 mb-3">
-                                <span class="bg-gray-100 text-gray-700 text-xs font-bold px-2 py-1 rounded">1.8 kg</span>
-                                <span class="text-xs text-gray-500"><i data-lucide="users" class="w-3 h-3 inline pb-0.5"></i> Para 4 a 5 Pessoas</span>
-                            </div>
-                            <p class="text-xs text-gray-500 mb-4 h-12">"Matsuri" significa Festival. A gigante panela de família para colocar no centro da mesa no domingo.</p>
-                            <div class="text-2xl font-black text-nishi-black group-hover:text-nishi-red transition-colors">R$ 124,90</div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- Outros Itens (Grid) -->
-            <div class="grid md:grid-cols-2 gap-6 md:gap-8">
-                
-                <!-- Guioza -->
-                <div class="bg-white p-6 md:p-8 border border-gray-200 hover:border-nishi-gold transition-colors group relative flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-start mb-3">
-                            <h4 class="text-xl md:text-2xl font-serif font-bold text-nishi-black group-hover:text-nishi-red transition-colors">Guioza Suíno</h4>
-                            <span class="text-lg font-bold text-nishi-black">R$ 32,90</span>
-                        </div>
-                        <p class="text-gray-500 text-sm mb-4">Pastéis japoneses com massa fina (6 unid.), recheados com carne suína moída e vegetais. Selados na frigideira e cozidos no vapor até dourarem.</p>
-                    </div>
-                    <span class="text-[10px] font-bold text-nishi-gold uppercase tracking-widest bg-yellow-50 px-2 py-1 rounded w-max">Entrada Clássica</span>
-                </div>
-
-
-                <!-- Missoshiro (NOVO) -->
-                <div class="bg-white p-6 md:p-8 border border-gray-200 hover:border-amber-600 transition-colors group relative flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-start mb-3">
-                            <h4 class="text-xl md:text-2xl font-serif font-bold text-nishi-black group-hover:text-amber-700 transition-colors">Missoshiro</h4>
-                            <span class="text-lg font-bold text-nishi-black">R$ 16,90</span>
-                        </div>
-                        <p class="text-gray-500 text-sm mb-4">Caldo tradicional de soja fermentada, preparado com cubos de tofu macio, cebolinha fresca e alga. O acompanhamento quente essencial para equilibrar o paladar.</p>
-                    </div>
-                    <span class="text-[10px] font-bold text-amber-700 uppercase tracking-widest bg-amber-50 px-2 py-1 rounded w-max">Acompanhamento</span>
-                </div>
-
-
-
-                <!-- Chá -->
-                <div class="bg-white p-6 md:p-8 border border-gray-200 hover:border-nishi-gold transition-colors group relative flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-start mb-3">
-                            <h4 class="text-xl md:text-2xl font-serif font-bold text-nishi-black group-hover:text-nishi-red transition-colors">Chá Verde Yuzu</h4>
-                            <span class="text-lg font-bold text-nishi-black">R$ 14,90</span>
-                        </div>
-                        <p class="text-gray-500 text-sm mb-4">A bebida ideal para limpar o paladar após o umami do Yakisoba. Chá verde gelado de infusão fria, levemente adoçado e com um toque cítrico refrescante.</p>
-                    </div>
-                    <span class="text-[10px] font-bold text-green-700 uppercase tracking-widest bg-green-50 px-2 py-1 rounded w-max">Bebida Artesanal</span>
-                </div>
-
-                <!-- Mochi -->
-                <div class="bg-white p-6 md:p-8 border border-gray-200 hover:border-nishi-gold transition-colors group relative md:col-span-2">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div class="md:w-3/4">
-                            <div class="flex justify-between items-start mb-2 md:mb-3">
-                                <h4 class="text-xl md:text-2xl font-serif font-bold text-nishi-black group-hover:text-nishi-red transition-colors">Mochi Tradicional</h4>
-                            </div>
-                            <p class="text-gray-500 text-sm mb-3">A clássica sobremesa japonesa feita de massa de arroz glutinoso incrivelmente macia (2 unid.).<br><strong>Recheios:</strong> Morango fresco ou pasta doce de feijão vermelho (Anko).</p>
-                            <span class="text-[10px] font-bold text-pink-600 uppercase tracking-widest bg-pink-50 px-2 py-1 rounded w-max inline-block">Sobremesa</span>
-                        </div>
-                        <div class="md:w-1/4 md:text-right">
-                            <span class="text-2xl font-bold text-nishi-black">R$ 22,90</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- RODAPÉ / CONTATO -->
-    <footer id="contato" class="bg-nishi-black text-gray-400 py-16 px-6 border-t-4 border-nishi-red">
-        <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-12">
-            <div>
-                <h4 class="text-white font-serif font-bold text-2xl mb-4 md:mb-6 uppercase tracking-widest">Nishioka</h4>
-                <p class="text-sm mb-6 max-w-sm">Trazendo a autenticidade e a precisão da culinária tradicional para o coração de Goiás.</p>
-                <div class="flex gap-4">
-                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-nishi-red text-white transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-nishi-red text-white transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+      <section id="comparativo">
+        <div class="container">
+          <div class="section-head reveal">
+            <div class="section-kicker">Antes e depois</div>
+            <h2 class="section-title">A diferença entre operar no improviso e operar com inteligência.</h2>
+            <p class="section-desc">
+              A N.I.A. não substitui a experiência humana. Ela remove o excesso de trabalho operacional para que pessoas possam decidir melhor, atender melhor, vender melhor e gerir melhor.
+            </p>
+          </div>
+
+          <div class="comparison-wrap reveal">
+            <div class="comparison-head">
+              <div>
+                <span>Sem estrutura inteligente</span>
+                <strong>Operação dependente de esforço manual</strong>
+              </div>
+
+              <div>
+                <span>Com a N.I.A.</span>
+                <strong>Operação conectada, rastreável e escalável</strong>
+              </div>
+            </div>
+
+            <div class="comparison-row">
+              <div class="comparison-cell">
+                <span class="bad">×</span>
+                Informações espalhadas em WhatsApp, planilhas, cadernos, sistemas isolados e memória da equipe.
+              </div>
+
+              <div class="comparison-cell">
+                <span class="good">✓</span>
+                Dados organizados em fluxos claros, com registros, histórico, responsáveis e etapas definidas.
+              </div>
+            </div>
+
+            <div class="comparison-row">
+              <div class="comparison-cell">
+                <span class="bad">×</span>
+                Retrabalho constante: copiar, colar, conferir, reenviar, perguntar de novo e corrigir erro manual.
+              </div>
+
+              <div class="comparison-cell">
+                <span class="good">✓</span>
+                Rotinas automatizadas reduzem repetição e liberam a equipe para atividades de maior valor.
+              </div>
+            </div>
+
+            <div class="comparison-row">
+              <div class="comparison-cell">
+                <span class="bad">×</span>
+                Decisões tomadas no achismo porque os indicadores não aparecem de forma simples.
+              </div>
+
+              <div class="comparison-cell">
+                <span class="good">✓</span>
+                Painéis, relatórios e alertas ajudam a enxergar gargalos e priorizar ações com clareza.
+              </div>
+            </div>
+
+            <div class="comparison-row">
+              <div class="comparison-cell">
+                <span class="bad">×</span>
+                Crescimento gera caos, porque a operação depende de pessoas fazendo tudo manualmente.
+              </div>
+
+              <div class="comparison-cell">
+                <span class="good">✓</span>
+                Processos bem implantados sustentam crescimento com mais controle e menos dependência operacional.
+              </div>
+            </div>
+
+            <div class="comparison-row">
+              <div class="comparison-cell">
+                <span class="bad">×</span>
+                Ferramentas contratadas sem estratégia viram custo, não solução.
+              </div>
+
+              <div class="comparison-cell">
+                <span class="good">✓</span>
+                A consultoria identifica o que realmente precisa ser implantado, integrado ou desenvolvido.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="segmentos">
+        <div class="container">
+          <div class="section-head reveal">
+            <div class="section-kicker">Segmentos atendidos</div>
+            <h2 class="section-title">Soluções inteligentes para diferentes tipos de empresa.</h2>
+            <p class="section-desc">
+              O trabalho da N.I.A. não depende de um único segmento. Onde há processo manual, informação solta, retrabalho ou falta de integração, existe oportunidade de melhoria.
+            </p>
+          </div>
+
+          <div class="industries-grid">
+            <article class="industry-card reveal">
+              <span>🛒</span>
+              <h3>Comércio local</h3>
+              <p>Gestão de pedidos, estoque, vendas, atendimento, pós-venda e rotinas administrativas.</p>
+            </article>
+
+            <article class="industry-card reveal">
+              <span>🏥</span>
+              <h3>Clínicas e saúde</h3>
+              <p>Triagem, agendamento, lembretes, documentos, organização de dados e fluxos internos.</p>
+            </article>
+
+            <article class="industry-card reveal">
+              <span>⚖</span>
+              <h3>Escritórios</h3>
+              <p>Controle de demandas, documentos, prazos, relatórios, acompanhamento e comunicação.</p>
+            </article>
+
+            <article class="industry-card reveal">
+              <span>🏭</span>
+              <h3>Operações</h3>
+              <p>Processos internos, aprovação, manutenção, compras, controle e acompanhamento operacional.</p>
+            </article>
+
+            <article class="industry-card reveal">
+              <span>🎓</span>
+              <h3>Educação</h3>
+              <p>Inscrições, atendimento, suporte, comunicação com alunos e automação de secretaria.</p>
+            </article>
+
+            <article class="industry-card reveal">
+              <span>🚚</span>
+              <h3>Logística</h3>
+              <p>Rastreamento de etapas, atualização de status, integração de dados e alertas operacionais.</p>
+            </article>
+
+            <article class="industry-card reveal">
+              <span>💼</span>
+              <h3>Serviços B2B</h3>
+              <p>Propostas, CRM, follow-up, contratos, relatórios e fluxo comercial consultivo.</p>
+            </article>
+
+            <article class="industry-card reveal">
+              <span>📊</span>
+              <h3>Gestão interna</h3>
+              <p>Financeiro, RH, compras, indicadores, documentos e tarefas administrativas recorrentes.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="aplicacoes">
+        <div class="container">
+          <div class="section-head reveal">
+            <div class="section-kicker">Aplicações práticas</div>
+            <h2 class="section-title">Exemplos de projetos que a N.I.A. pode implantar.</h2>
+            <p class="section-desc">
+              Cada empresa tem uma realidade. Abaixo estão exemplos de frentes de trabalho que podem ser adaptadas conforme o nível de maturidade, orçamento e urgência do cliente.
+            </p>
+          </div>
+
+          <div class="cases">
+            <article class="case-card reveal">
+              <div class="case-label">Projeto exemplo 01</div>
+              <h3>Central inteligente de demandas internas</h3>
+              <p>
+                Para empresas que recebem pedidos por muitos canais e perdem controle do que foi solicitado, por quem, quando e com qual prioridade.
+              </p>
+              <ul class="mini-list">
+                <li>Entrada organizada de solicitações.</li>
+                <li>Classificação automática por tipo e urgência.</li>
+                <li>Notificação para responsáveis.</li>
+                <li>Dashboard com status e gargalos.</li>
+              </ul>
+
+              <div class="case-metrics">
+                <div class="metric">
+                  <strong>-45%</strong>
+                  <span>tempo perdido procurando informação</span>
                 </div>
-            </div>
-            
-            <div>
-                <h4 class="text-white font-bold text-xs md:text-sm tracking-[0.2em] uppercase mb-4 md:mb-6">Funcionamento</h4>
-                <ul class="space-y-3 text-sm">
-                    <li class="flex justify-between border-b border-gray-800 pb-2"><span>Terça a Quinta</span> <span class="text-white">18:30 - 22:30</span></li>
-                    <li class="flex justify-between border-b border-gray-800 pb-2"><span>Sexta a Sábado</span> <span class="text-white">18:30 - 23:30</span></li>
-                    <li class="flex justify-between border-b border-gray-800 pb-2"><span>Domingo</span> <span class="text-white">18:00 - 22:00</span></li>
-                    <li class="flex justify-between text-nishi-red font-bold pt-1"><span>Segunda</span> <span>Fechado</span></li>
-                </ul>
+
+                <div class="metric">
+                  <strong>+80%</strong>
+                  <span>clareza sobre demandas em aberto</span>
+                </div>
+
+                <div class="metric">
+                  <strong>24/7</strong>
+                  <span>registro de solicitações</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="case-card reveal">
+              <div class="case-label">Projeto exemplo 02</div>
+              <h3>Integração entre vendas, financeiro e operação</h3>
+              <p>
+                Para empresas em que a venda acontece em um lugar, a cobrança em outro e a execução em outro, gerando atraso, confusão e retrabalho.
+              </p>
+              <ul class="mini-list">
+                <li>Integração entre formulário, CRM, planilha e sistema.</li>
+                <li>Geração automática de tarefas por etapa.</li>
+                <li>Alertas de pendência e acompanhamento.</li>
+                <li>Relatório gerencial de fluxo comercial.</li>
+              </ul>
+
+              <div class="case-metrics">
+                <div class="metric">
+                  <strong>-60%</strong>
+                  <span>retrabalho administrativo</span>
+                </div>
+
+                <div class="metric">
+                  <strong>+35%</strong>
+                  <span>velocidade de resposta interna</span>
+                </div>
+
+                <div class="metric">
+                  <strong>1 visão</strong>
+                  <span>para várias áreas conectadas</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="case-card reveal">
+              <div class="case-label">Projeto exemplo 03</div>
+              <h3>Assistente operacional para documentos e relatórios</h3>
+              <p>
+                Para negócios que precisam transformar informações brutas em documentos, resumos, relatórios, respostas, análises ou registros padronizados.
+              </p>
+              <ul class="mini-list">
+                <li>Padronização de documentos recorrentes.</li>
+                <li>Resumo de informações longas.</li>
+                <li>Geração de relatórios internos.</li>
+                <li>Organização do conhecimento da empresa.</li>
+              </ul>
+
+              <div class="case-metrics">
+                <div class="metric">
+                  <strong>-70%</strong>
+                  <span>tempo em textos repetitivos</span>
+                </div>
+
+                <div class="metric">
+                  <strong>+50%</strong>
+                  <span>consistência de documentação</span>
+                </div>
+
+                <div class="metric">
+                  <strong>Base</strong>
+                  <span>de conhecimento reaproveitável</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="case-card reveal">
+              <div class="case-label">Projeto exemplo 04</div>
+              <h3>Painel executivo de indicadores</h3>
+              <p>
+                Para empresas que têm dados, mas não conseguem visualizar desempenho, gargalos, volume, produtividade, vendas, atrasos ou histórico de forma simples.
+              </p>
+              <ul class="mini-list">
+                <li>Consolidação de dados importantes.</li>
+                <li>Indicadores por área ou processo.</li>
+                <li>Alertas de queda, atraso ou excesso.</li>
+                <li>Visão para decisão rápida.</li>
+              </ul>
+
+              <div class="case-metrics">
+                <div class="metric">
+                  <strong>1 tela</strong>
+                  <span>para entender a operação</span>
+                </div>
+
+                <div class="metric">
+                  <strong>+90%</strong>
+                  <span>visibilidade gerencial</span>
+                </div>
+
+                <div class="metric">
+                  <strong>Dados</strong>
+                  <span>transformados em decisão</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="tecnologia">
+        <div class="container">
+          <div class="section-head reveal">
+            <div class="section-kicker">Autoridade técnica sem complicar</div>
+            <h2 class="section-title">Engenharia de software, automação e inteligência aplicada ao negócio.</h2>
+            <p class="section-desc">
+              A N.I.A. combina visão técnica com linguagem acessível. O cliente não precisa entender código, API ou arquitetura. Ele precisa entender o problema, a solução, o prazo, o impacto e como usar.
+            </p>
+          </div>
+
+          <div class="tech-showcase">
+            <div class="stack-card reveal">
+              <h3>Blocos de tecnologia que podem compor uma solução</h3>
+              <p>
+                Cada projeto usa apenas o necessário. A N.I.A. pode trabalhar com ferramentas prontas, plataformas de automação, integrações via API, bancos de dados, painéis e desenvolvimento sob medida.
+              </p>
+
+              <div class="stack-grid">
+                <div class="stack-item">
+                  <span>Automação</span>
+                  <strong>Workflows inteligentes</strong>
+                  <small>Fluxos que executam tarefas, enviam alertas, registram informações e conectam etapas.</small>
+                </div>
+
+                <div class="stack-item">
+                  <span>Integrações</span>
+                  <strong>APIs e conectores</strong>
+                  <small>Comunicação entre sistemas para reduzir trabalho manual e dados duplicados.</small>
+                </div>
+
+                <div class="stack-item">
+                  <span>Dados</span>
+                  <strong>Dashboards e relatórios</strong>
+                  <small>Indicadores claros para acompanhar operação, vendas, demandas e produtividade.</small>
+                </div>
+
+                <div class="stack-item">
+                  <span>Sistemas</span>
+                  <strong>Soluções personalizadas</strong>
+                  <small>Aplicações internas, portais, painéis, formulários e ferramentas sob medida.</small>
+                </div>
+
+                <div class="stack-item">
+                  <span>Inteligência</span>
+                  <strong>Assistentes especializados</strong>
+                  <small>Apoio em triagem, classificação, documentação, análise e organização de conhecimento.</small>
+                </div>
+
+                <div class="stack-item">
+                  <span>Governança</span>
+                  <strong>Segurança e controle</strong>
+                  <small>Regras, permissões, rastreabilidade e boas práticas para uso confiável da solução.</small>
+                </div>
+              </div>
             </div>
 
-            <div>
-                <h4 class="text-white font-bold text-xs md:text-sm tracking-[0.2em] uppercase mb-4 md:mb-6">Faça o seu pedido</h4>
-                <ul class="space-y-4 text-sm mb-6">
-                    <li class="flex items-start gap-3">
-                        <i data-lucide="map-pin" class="w-5 h-5 text-nishi-red shrink-0 mt-0.5"></i>
-                        <span>Cristalina, Goiás<br>Apenas Delivery e Retirada</span>
-                    </li>
-                </ul>
-                <button class="w-full bg-[#25D366] hover:bg-[#128C7E] text-white font-bold py-3 md:py-4 rounded-sm flex items-center justify-center gap-2 transition-colors text-sm md:text-base shadow-lg shadow-green-900/20">
-                    <i data-lucide="message-circle" class="w-5 h-5"></i> Pedir pelo WhatsApp
-                </button>
+            <div class="terminal reveal">
+              <div class="terminal-header">
+                <div class="traffic">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="panel-title">implantacao.nia</div>
+              </div>
+
+              <div class="terminal-code">
+<span class="code-comment">// Exemplo conceitual de arquitetura N.I.A.</span>
+<span class="code-key">empresa</span>: {
+  <span class="code-key">problema</span>: <span class="code-string">"processos manuais e dados espalhados"</span>,
+  <span class="code-key">objetivo</span>: <span class="code-string">"ganhar eficiência, controle e escala"</span>
+}
+
+<span class="code-key">diagnostico</span>: [
+  <span class="code-string">"mapear fluxo real"</span>,
+  <span class="code-string">"identificar gargalos"</span>,
+  <span class="code-string">"priorizar impacto rápido"</span>
+]
+
+<span class="code-key">solucao</span>: {
+  <span class="code-key">automacoes</span>: <span class="code-value">true</span>,
+  <span class="code-key">integracoes</span>: <span class="code-value">true</span>,
+  <span class="code-key">dashboard</span>: <span class="code-value">true</span>,
+  <span class="code-key">treinamento</span>: <span class="code-value">true</span>
+}
+
+<span class="code-key">resultadoEsperado</span>: [
+  <span class="code-string">"menos retrabalho"</span>,
+  <span class="code-string">"mais rastreabilidade"</span>,
+  <span class="code-string">"decisões com dados"</span>,
+  <span class="code-string">"equipe mais produtiva"</span>
+]
+              </div>
             </div>
+          </div>
         </div>
-        <div class="max-w-6xl mx-auto mt-12 md:mt-16 pt-8 border-t border-gray-800 text-center text-xs text-gray-600">
-            &copy; 2026 Nishioka Yakisoba. Todos os direitos reservados.
+      </section>
+
+      <section id="planos">
+        <div class="container">
+          <div class="section-head reveal">
+            <div class="section-kicker">Modelos de contratação</div>
+            <h2 class="section-title">Planos flexíveis para diferentes níveis de maturidade.</h2>
+            <p class="section-desc">
+              Os valores podem ser ajustados conforme escopo, complexidade, ferramentas envolvidas e necessidade de desenvolvimento. A ideia é apresentar pacotes claros para facilitar a conversa comercial.
+            </p>
+          </div>
+
+          <div class="pricing-grid">
+            <article class="price-card reveal">
+              <div class="price-card-head">
+                <div class="price-card-title-wrap">
+                  <h3>Diagnóstico N.I.A.</h3>
+                </div>
+              </div>
+
+              <p class="price-desc">
+                Para empresas que querem entender onde estão os gargalos e quais soluções fazem sentido antes de investir em implantação.
+              </p>
+
+              <div class="price">
+                Sob consulta
+                <small>Levantamento inicial e mapa de oportunidades</small>
+              </div>
+
+              <ul>
+                <li>Reunião de entendimento do negócio.</li>
+                <li>Mapeamento dos principais processos.</li>
+                <li>Lista de gargalos e oportunidades.</li>
+                <li>Sugestão de prioridades por impacto.</li>
+                <li>Proposta de próximos passos.</li>
+              </ul>
+
+              <a class="btn btn-secondary" href="#contato">Começar pelo diagnóstico</a>
+            </article>
+
+            <article class="price-card featured reveal">
+              <div class="price-card-head">
+                <div class="price-card-title-wrap">
+                  <h3>Implantação Inteligente</h3>
+                </div>
+                <div class="price-badge">Mais estratégico</div>
+              </div>
+
+              <p class="price-desc">
+                Para empresas que já sabem que precisam melhorar a operação e querem uma solução implantada com acompanhamento técnico.
+              </p>
+
+              <div class="price">
+                Projeto fechado
+                <small>Escopo definido após diagnóstico</small>
+              </div>
+
+              <ul>
+                <li>Desenho da solução ideal.</li>
+                <li>Configuração de automações.</li>
+                <li>Integração entre ferramentas.</li>
+                <li>Testes, ajustes e validação.</li>
+                <li>Treinamento da equipe.</li>
+                <li>Documentação de uso.</li>
+              </ul>
+
+              <a class="btn btn-primary" href="#contato">Solicitar proposta</a>
+            </article>
+
+            <article class="price-card reveal">
+              <div class="price-card-head">
+                <div class="price-card-title-wrap">
+                  <h3>Evolução Contínua</h3>
+                </div>
+              </div>
+
+              <p class="price-desc">
+                Para empresas que querem suporte recorrente, melhoria contínua, novas automações e acompanhamento de indicadores.
+              </p>
+
+              <div class="price">
+                Mensal
+                <small>Consultoria e evolução por ciclo</small>
+              </div>
+
+              <ul>
+                <li>Acompanhamento de resultados.</li>
+                <li>Otimização de fluxos existentes.</li>
+                <li>Novas automações por prioridade.</li>
+                <li>Suporte técnico consultivo.</li>
+                <li>Reuniões periódicas de evolução.</li>
+              </ul>
+
+              <a class="btn btn-secondary" href="#contato">Falar sobre recorrência</a>
+            </article>
+          </div>
         </div>
+      </section>
+
+      <section id="faq">
+        <div class="container">
+          <div class="section-head reveal">
+            <div class="section-kicker">Perguntas frequentes</div>
+            <h2 class="section-title">Respostas simples para dúvidas comuns.</h2>
+            <p class="section-desc">
+              A proposta da N.I.A. é tornar a tecnologia mais fácil de entender e mais segura de aplicar dentro da empresa.
+            </p>
+          </div>
+
+          <div class="faq-grid">
+            <div class="faq-item reveal">
+              <h3>A N.I.A. vende uma ferramenta pronta?</h3>
+              <p>
+                Não necessariamente. A N.I.A. é uma consultoria de implantação. Dependendo do problema, a solução pode envolver ferramenta pronta, automação, integração, sistema personalizado ou combinação de várias partes.
+              </p>
+            </div>
+
+            <div class="faq-item reveal">
+              <h3>Preciso entender de tecnologia para contratar?</h3>
+              <p>
+                Não. O papel da consultoria é traduzir o cenário técnico em decisões práticas. O cliente entende o que será feito, por que será feito, como será usado e qual resultado se espera.
+              </p>
+            </div>
+
+            <div class="faq-item reveal">
+              <h3>A solução substitui pessoas?</h3>
+              <p>
+                O objetivo não é substituir o humano. O objetivo é reduzir tarefas repetitivas, organizar informações, diminuir erro manual e liberar a equipe para atividades que exigem decisão, relacionamento e estratégia.
+              </p>
+            </div>
+
+            <div class="faq-item reveal">
+              <h3>Dá para começar pequeno?</h3>
+              <p>
+                Sim. O ideal é começar por uma dor clara, implantar uma solução enxuta, medir resultado e evoluir. A tecnologia deve crescer junto com a maturidade da empresa.
+              </p>
+            </div>
+
+            <div class="faq-item reveal">
+              <h3>Quais tipos de processo podem ser automatizados?</h3>
+              <p>
+                Processos com etapas repetitivas, entrada e saída de dados, aprovações, notificações, relatórios, cadastros, follow-ups, geração de documentos e acompanhamento de status.
+              </p>
+            </div>
+
+            <div class="faq-item reveal">
+              <h3>Como saber o preço?</h3>
+              <p>
+                O preço depende do escopo, número de integrações, complexidade técnica, ferramentas usadas e nível de acompanhamento. Por isso, o diagnóstico inicial ajuda a propor algo justo e viável.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contato" class="cta-section">
+        <div class="container">
+          <div class="cta-box reveal">
+            <div class="cta-content">
+              <div>
+                <div class="section-kicker">Próximo passo</div>
+                <h2>Vamos descobrir onde sua empresa pode ganhar eficiência primeiro?</h2>
+                <p>
+                  Solicite um diagnóstico inicial da N.I.A. e receba uma visão clara dos gargalos, oportunidades de automação, integrações possíveis e caminhos para implantar soluções inteligentes de verdade.
+                </p>
+
+                <div class="contact-card">
+                  <strong>N.I.A. — Nishioka Inteligência em Automação</strong><br />
+                  Consultoria para implantação de automações, integrações, sistemas e soluções inteligentes.<br />
+                  Atendimento consultivo para empresas que querem operar com mais clareza, velocidade e controle.
+                </div>
+              </div>
+
+              <div class="cta-actions">
+                <a class="btn btn-primary" href="https://wa.me/5500000000000?text=Ol%C3%A1%2C%20quero%20solicitar%20um%20diagn%C3%B3stico%20inicial%20da%20N.I.A." target="_blank" rel="noopener">
+                  Chamar no WhatsApp
+                </a>
+
+                <a class="btn btn-secondary" href="mailto:contato@niaautomacao.com.br?subject=Diagn%C3%B3stico%20N.I.A.&body=Ol%C3%A1%2C%20quero%20entender%20como%20a%20N.I.A.%20pode%20ajudar%20minha%20empresa.">
+                  Enviar e-mail
+                </a>
+
+                <a class="btn btn-secondary" href="#solucoes">
+                  Rever soluções
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div>
+          © <span id="year"></span> N.I.A. — Nishioka Inteligência em Automação.
+        </div>
+
+        <div class="footer-links">
+          <a href="#sobre">Marca</a>
+          <a href="#solucoes">Soluções</a>
+          <a href="#metodo">Método</a>
+          <a href="#contato">Contato</a>
+        </div>
+      </div>
     </footer>
+  </div>
 
-    <script>
-        // Iniciar ícones
-        lucide.createIcons();
-    </script>
+  <script>
+    const canvas = document.getElementById("networkCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let width;
+    let height;
+    let particles = [];
+    let particleCount = 0;
+    let mouse = {
+      x: null,
+      y: null,
+      radius: 140
+    };
+
+    function resizeCanvas() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth;
+      height = window.innerHeight;
+
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = width + "px";
+      canvas.style.height = height + "px";
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      particleCount = Math.min(85, Math.max(32, Math.floor((width * height) / 23000)));
+      createParticles();
+    }
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.42;
+        this.vy = (Math.random() - 0.5) * 0.42;
+        this.size = Math.random() * 1.9 + 0.7;
+        this.alpha = Math.random() * 0.42 + 0.12;
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x < -20) this.x = width + 20;
+        if (this.x > width + 20) this.x = -20;
+        if (this.y < -20) this.y = height + 20;
+        if (this.y > height + 20) this.y = -20;
+
+        if (mouse.x && mouse.y) {
+          const dx = this.x - mouse.x;
+          const dy = this.y - mouse.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < mouse.radius) {
+            const angle = Math.atan2(dy, dx);
+            const force = (mouse.radius - distance) / mouse.radius;
+            this.x += Math.cos(angle) * force * 0.7;
+            this.y += Math.sin(angle) * force * 0.7;
+          }
+        }
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(104, 225, 253, ${this.alpha})`;
+        ctx.fill();
+      }
+    }
+
+    function createParticles() {
+      particles = [];
+
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function drawConnections() {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          const maxDistance = width < 780 ? 105 : 135;
+
+          if (distance < maxDistance) {
+            const opacity = (1 - distance / maxDistance) * 0.12;
+
+            const gradient = ctx.createLinearGradient(
+              particles[i].x,
+              particles[i].y,
+              particles[j].x,
+              particles[j].y
+            );
+
+            gradient.addColorStop(0, `rgba(104, 225, 253, ${opacity})`);
+            gradient.addColorStop(0.5, `rgba(124, 92, 255, ${opacity * 0.75})`);
+            gradient.addColorStop(1, `rgba(19, 242, 163, ${opacity * 0.65})`);
+
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animateCanvas() {
+      ctx.clearRect(0, 0, width, height);
+
+      const backgroundGlow = ctx.createRadialGradient(
+        width * 0.5,
+        height * 0.15,
+        0,
+        width * 0.5,
+        height * 0.15,
+        Math.max(width, height) * 0.8
+      );
+
+      backgroundGlow.addColorStop(0, "rgba(104, 225, 253, 0.04)");
+      backgroundGlow.addColorStop(0.42, "rgba(124, 92, 255, 0.025)");
+      backgroundGlow.addColorStop(1, "rgba(6, 9, 20, 0)");
+
+      ctx.fillStyle = backgroundGlow;
+      ctx.fillRect(0, 0, width, height);
+
+      drawConnections();
+
+      particles.forEach((particle) => {
+        particle.update();
+        particle.draw();
+      });
+
+      requestAnimationFrame(animateCanvas);
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+
+    window.addEventListener("mousemove", (event) => {
+      mouse.x = event.clientX;
+      mouse.y = event.clientY;
+    });
+
+    window.addEventListener("mouseleave", () => {
+      mouse.x = null;
+      mouse.y = null;
+    });
+
+    resizeCanvas();
+    animateCanvas();
+
+    const revealElements = document.querySelectorAll(".reveal");
+
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.12
+      }
+    );
+
+    revealElements.forEach((element) => revealObserver.observe(element));
+
+    const countElements = document.querySelectorAll("[data-count]");
+    let countStarted = false;
+
+    function animateNumber(element) {
+      const target = Number(element.dataset.count);
+      const duration = 1300;
+      const start = performance.now();
+
+      function frame(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.floor(eased * target);
+
+        if (element.textContent.includes("%") || element.innerHTML.includes("<small>%</small>")) {
+          element.innerHTML = `${current}<small>%</small>`;
+        } else {
+          element.textContent = current;
+        }
+
+        if (progress < 1) {
+          requestAnimationFrame(frame);
+        }
+      }
+
+      requestAnimationFrame(frame);
+    }
+
+    const countObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !countStarted) {
+            countStarted = true;
+            countElements.forEach(animateNumber);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    const dashboard = document.querySelector(".dashboard-grid");
+    if (dashboard) countObserver.observe(dashboard);
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    mobileMenu.addEventListener("click", () => {
+      const links = Array.from(document.querySelectorAll(".nav-links a"));
+      const menuText = links.map((link, index) => `${index + 1}. ${link.textContent}`).join("\n");
+      alert(`Menu N.I.A.\n\n${menuText}\n\nUse os links do topo em telas maiores ou role a página para navegar.`);
+    });
+  </script>
 </body>
 </html>
